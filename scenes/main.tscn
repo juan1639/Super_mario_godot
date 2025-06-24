@@ -1,10 +1,53 @@
-[gd_scene load_steps=3 format=3 uid="uid://cks3mpwilahkr"]
+[gd_scene load_steps=4 format=3 uid="uid://cks3mpwilahkr"]
 
 [ext_resource type="PackedScene" uid="uid://bxaqji5l0cw2b" path="res://scenes/map_1_1.tscn" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://cojy6dw7cslh4" path="res://scripts/main.gd" id="1_sugp2"]
 [ext_resource type="PackedScene" uid="uid://4hcgtj15ld1m" path="res://scenes/jugador.tscn" id="2_0wfyh"]
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_sugp2")
 
 [node name="Map_1_1" parent="." instance=ExtResource("1_o5qli")]
 
 [node name="Jugador" parent="." instance=ExtResource("2_0wfyh")]
+
+[node name="GoombaSpawns" type="Node" parent="."]
+
+[node name="Spawn0" type="Marker2D" parent="GoombaSpawns"]
+position = Vector2(-1285, -24)
+
+[node name="Spawn1" type="Marker2D" parent="GoombaSpawns"]
+position = Vector2(-855, -22)
+
+[node name="Spawn2" type="Marker2D" parent="GoombaSpawns"]
+position = Vector2(-823, -22)
+
+[node name="Spawn3" type="Marker2D" parent="GoombaSpawns"]
+position = Vector2(-361, -182)
+
+[node name="Spawn4" type="Marker2D" parent="GoombaSpawns"]
+position = Vector2(-327, -182)
+
+[node name="Spawn5" type="Marker2D" parent="GoombaSpawns"]
+position = Vector2(-90, -24)
+
+[node name="Spawn6" type="Marker2D" parent="GoombaSpawns"]
+position = Vector2(-58, -24)
+
+[node name="Spawn7" type="Marker2D" parent="GoombaSpawns"]
+position = Vector2(103, -28)
+
+[node name="Spawn8" type="Marker2D" parent="GoombaSpawns"]
+position = Vector2(134, -28)
+
+[node name="Spawn9" type="Marker2D" parent="GoombaSpawns"]
+position = Vector2(391, -23)
+
+[node name="Spawn10" type="Marker2D" parent="GoombaSpawns"]
+position = Vector2(422, -23)
+
+[node name="Spawn11" type="Marker2D" parent="GoombaSpawns"]
+position = Vector2(1029, -24)
+
+[node name="Spawn12" type="Marker2D" parent="GoombaSpawns"]
+position = Vector2(1061, -24)

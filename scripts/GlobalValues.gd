@@ -1,0 +1,9 @@
+extends Node
+
+# CONTANTAES COMPARTIDAS:
+# GRAVEDAD:
+const GRAVEDAD = 90.0
+
+# LIMITES MUNDO:
+const LIMITE_IZ = -1700
+const LIMITE_DE = 1700
