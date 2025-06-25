@@ -71,8 +71,8 @@ func _physics_process(delta):
 	global_position.x = clamp(global_position.x, GlobalValues.LIMITE_IZ + 30, GlobalValues.LIMITE_DE - 20)
 	
 	# CHECK WORLD-BOTTOM-LIMIT:
-	if global_position.y > BOTTOM_LIMIT:
-		global_position = Vector2(-1578, -100)
+	#if global_position.y > BOTTOM_LIMIT:
+		#_reset_position()
 	
 	move_and_slide()
 	
@@ -87,6 +87,10 @@ func _update_animation():
 		animationPlayer.play("Walk")
 	else:
 		animationPlayer.play("Idle")
+
+func _on_fall_zone_body_entered(body):
+	if body == self:
+		_reset_position()
 
 # RESETEAR-RESPAWNEAR JUGADOR A SU POSICION INICIAL:
 func _reset_position():

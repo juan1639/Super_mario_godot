@@ -19,6 +19,22 @@ config/icon="res://icon.svg"
 
 GlobalValues="*res://scripts/GlobalValues.gd"
 
+[display]
+
+window/stretch/mode="canvas_items"
+
+[global_group]
+
+JugadorGlobal=""
+
+[layer_names]
+
+2d_physics/layer_1="TilesSolidos"
+2d_physics/layer_2="Goomba"
+2d_physics/layer_3="Jugador"
+2d_physics/layer_4="EvitaCaerseGoomba"
+2d_physics/layer_5="BottomDeadZone"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
