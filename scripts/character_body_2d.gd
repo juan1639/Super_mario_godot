@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-# VELOCIDAD HORIZONAL:
+# VELOCIDAD HORIZONAL
 const VEL_MAX = 250.0
 const ACELERACION = 200.0
 const DECELERACION = 250.0
@@ -26,19 +26,50 @@ const RESPAWN_POSITION = Vector2(-1578, -100)
 
 # FUNCION INICIALIZADORA:
 func _ready():
+	_reset_estados_cambio_estado_a("en_juego")
 	_reset_position()
 
 # FUNCION EJECUTANDOSE A 60 FPS:
 func _physics_process(delta):
-	# APLICAR GRAVEDAD:
+	if GlobalValues.estado_juego["transicion_flag_pole"]:
+		_aplicar_gravedad_leve(delta)
+		move_and_slide()
+		_update_animation()
+		return
+	
+	if not GlobalValues.estado_juego["en_juego"]:
+		_aplicar_gravedad(delta)
+		move_and_slide()
+		return
+	
+	_aplicar_gravedad(delta)
+	_movimiento_horizontal(delta)
+	_salto(delta)
+	_aplicar_clamps()
+	#_check_world_bottom_limit()
+	
+	move_and_slide()
+	_update_animation()
+
+# APLICAR GRAVEDAD:
+func _aplicar_gravedad(delta):
 	if not is_on_floor():
 		acel_gravedad += GlobalValues.GRAVEDAD * delta
 		velocity.y += acel_gravedad
 	else:
 		acel_gravedad = 0
 		velocity.y = 0
-	
-	# MOVIMIENTO HORIZONTAL:
+
+# APLICAR GRAVEDAD LEVE:
+func _aplicar_gravedad_leve(delta):
+	if not is_on_floor():
+		velocity.y += GlobalValues.GRAVEDAD * delta
+	else:
+		acel_gravedad = 0
+		velocity.y = 0
+
+# MOVIMIENTO HORIZONTAL:
+func _movimiento_horizontal(delta):
 	var input_direccion = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	
 	if input_direccion != 0:
@@ -46,8 +77,9 @@ func _physics_process(delta):
 		sprite.flip_h = input_direccion < 0
 	else:
 		velocity.x = move_toward(velocity.x, 0, DECELERACION * delta)
-	
-	# SALTO:
+
+# SALTO:
+func _salto(delta):
 	if is_on_floor() and Input.get_action_strength("ui_accept"):
 		salto_presionado = true
 		tiempo_salto = 0.0
@@ -63,24 +95,20 @@ func _physics_process(delta):
 			velocity.y += SALTO_EXTRA * delta
 		else:
 			salto_presionado = false
-	
+
+func _aplicar_clamps():
 	# CLAMP Velocity.y:
 	velocity.y = clamp(velocity.y, -1000, 1000)
 	
 	# CHECK WORLD-LIMITS-HOR:
 	global_position.x = clamp(global_position.x, GlobalValues.LIMITE_IZ + 30, GlobalValues.LIMITE_DE - 20)
-	
-	# CHECK WORLD-BOTTOM-LIMIT:
-	#if global_position.y > BOTTOM_LIMIT:
-		#_reset_position()
-	
-	move_and_slide()
-	
-	# ANIMACIONES:
-	_update_animation()
 
 # GESTIONAR-ANIMACIONES-JUGADOR:
 func _update_animation():
+	if GlobalValues.estado_juego["transicion_flag_pole"]:
+		animationPlayer.play("FlagPole")
+		return
+	
 	if not is_on_floor():
 		animationPlayer.play("Jump")
 	elif velocity.x != 0:
@@ -88,11 +116,29 @@ func _update_animation():
 	else:
 		animationPlayer.play("Idle")
 
+# SEÑALES:
 func _on_fall_zone_body_entered(body):
 	if body == self:
 		_reset_position()
+
+func _on_flag_pole_body_entered(body):
+	if body == self:
+		velocity = Vector2.ZERO
+		_reset_estados_cambio_estado_a("transicion_flag_pole")
 
 # RESETEAR-RESPAWNEAR JUGADOR A SU POSICION INICIAL:
 func _reset_position():
 	global_position = RESPAWN_POSITION
 	velocity = Vector2.ZERO
+	
+# RESETEAR-ESTADOS Y CAMBIAR UN ESTADO:
+func _reset_estados_cambio_estado_a(estado):
+	for keyName in GlobalValues.estado_juego.keys():
+		GlobalValues.estado_juego[keyName] = false
+	
+	GlobalValues.estado_juego[estado] = true
+
+# CHECK WORLD-BOTTOM-LIMIT:
+func _check_world_bottom_limit():
+	if global_position.y > BOTTOM_LIMIT:
+		_reset_position()

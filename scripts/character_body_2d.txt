@@ -1,12 +1,11 @@
 extends CharacterBody2D
 
-# VELOCIDAD HORIZONAL
+# VELOCIDAD HORIZONAL:
 const VEL_MAX = 250.0
 const ACELERACION = 200.0
 const DECELERACION = 250.0
 
-# SALTO Y GRAVEDAD
-const GRAVEDAD = 90.0
+# SALTO Y GRAVEDAD:
 const POTENCIA_SALTO = -250.0
 const SALTO_EXTRA = -280.0
 const DURACION_SALTO_EXTRA = 0.2
@@ -15,16 +14,25 @@ var acel_gravedad = 0.0
 var salto_presionado = false
 var tiempo_salto = 0.0
 
-const LIMITE_IZ = -1700
-const LIMITE_DE = 1700
+# WORLD LIMITS:
+const BOTTOM_LIMIT = 50
 
+# RESPAWN-POSITION:
+const RESPAWN_POSITION = Vector2(-1578, -100)
+
+# REFERENCIAS:
 @onready var sprite = $Sprite2D
 @onready var animationPlayer = $AnimationPlayer
 
+# FUNCION INICIALIZADORA:
+func _ready():
+	_reset_position()
+
+# FUNCION EJECUTANDOSE A 60 FPS:
 func _physics_process(delta):
 	# APLICAR GRAVEDAD:
 	if not is_on_floor():
-		acel_gravedad += GRAVEDAD * delta
+		acel_gravedad += GlobalValues.GRAVEDAD * delta
 		velocity.y += acel_gravedad
 	else:
 		acel_gravedad = 0
@@ -56,14 +64,22 @@ func _physics_process(delta):
 		else:
 			salto_presionado = false
 	
-	# CHECK LIMITES WORLD:
-	global_position.x = clamp(global_position.x, LIMITE_IZ + 30, LIMITE_DE - 20)
+	# CLAMP Velocity.y:
+	velocity.y = clamp(velocity.y, -1000, 1000)
+	
+	# CHECK WORLD-LIMITS-HOR:
+	global_position.x = clamp(global_position.x, GlobalValues.LIMITE_IZ + 30, GlobalValues.LIMITE_DE - 20)
+	
+	# CHECK WORLD-BOTTOM-LIMIT:
+	#if global_position.y > BOTTOM_LIMIT:
+		#_reset_position()
+	
+	move_and_slide()
 	
 	# ANIMACIONES:
 	_update_animation()
-	
-	move_and_slide()
 
+# GESTIONAR-ANIMACIONES-JUGADOR:
 func _update_animation():
 	if not is_on_floor():
 		animationPlayer.play("Jump")
@@ -71,3 +87,12 @@ func _update_animation():
 		animationPlayer.play("Walk")
 	else:
 		animationPlayer.play("Idle")
+
+func _on_fall_zone_body_entered(body):
+	if body == self:
+		_reset_position()
+
+# RESETEAR-RESPAWNEAR JUGADOR A SU POSICION INICIAL:
+func _reset_position():
+	global_position = RESPAWN_POSITION
+	velocity = Vector2.ZERO
