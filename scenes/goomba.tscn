@@ -135,20 +135,20 @@ _data = {
 
 [node name="Goomba" type="Node2D"]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+[node name="Goomba" type="CharacterBody2D" parent="."]
 z_index = 10
 collision_layer = 2
 collision_mask = 9
 script = ExtResource("1_s1jgw")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goomba"]
 shape = SubResource("RectangleShape2D_y2qtu")
 
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="Goomba"]
 texture = ExtResource("1_21hcc")
 hframes = 3
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody2D"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Goomba"]
 libraries = {
 &"": SubResource("AnimationLibrary_fgpj4")
 }

@@ -33,8 +33,18 @@ func _ready():
 func _physics_process(delta):
 	if GlobalValues.estado_juego["transicion_flag_pole"]:
 		_aplicar_gravedad_leve(delta)
+		check_start_go_goal_zone()
 		move_and_slide()
 		_update_animation()
+		return
+	
+	if GlobalValues.estado_juego["transicion_goal_zone"]:
+		_aplicar_gravedad(delta)
+		move_and_slide()
+		_update_animation()
+		return
+	
+	if GlobalValues.estado_juego["transicion_fireworks"]:
 		return
 	
 	if not GlobalValues.estado_juego["en_juego"]:
@@ -123,8 +133,22 @@ func _on_fall_zone_body_entered(body):
 
 func _on_flag_pole_body_entered(body):
 	if body == self:
+		print("bandera")
 		velocity = Vector2.ZERO
 		_reset_estados_cambio_estado_a("transicion_flag_pole")
+
+func _on_goal_zone_body_entered(body):
+	if body == self:
+		print("goal")
+		velocity = Vector2.ZERO
+		visible = false
+		_reset_estados_cambio_estado_a("transicion_fireworks")
+
+# CHECK START-GO-GOAL-ZONE:
+func check_start_go_goal_zone():
+	if is_on_floor():
+		velocity = Vector2(abs(VEL_MAX / 9), 0)
+		_reset_estados_cambio_estado_a("transicion_goal_zone")
 
 # RESETEAR-RESPAWNEAR JUGADOR A SU POSICION INICIAL:
 func _reset_position():

@@ -133,14 +133,14 @@ shape = SubResource("RectangleShape2D_rsg11")
 [node name="GoalZone" type="Area2D" parent="."]
 position = Vector2(1593, -10)
 collision_layer = 32
-collision_mask = 0
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GoalZone"]
 position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_srh4d")
 
 [node name="FlagPole" type="Area2D" parent="."]
-position = Vector2(1480, -26)
+position = Vector2(1477, -26)
 collision_layer = 32
 collision_mask = 4
 

@@ -28,5 +28,4 @@ func _ready():
 	
 	# Conectar señales de FlagPole y GoalZone:
 	flagPole.connect("body_entered", Callable(mario, "_on_flag_pole_body_entered"))
-	
-	
+	goalZone.connect("body_entered", Callable(mario, "_on_goal_zone_body_entered"))
