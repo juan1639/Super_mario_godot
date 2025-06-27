@@ -15,7 +15,7 @@ var salto_presionado = false
 var tiempo_salto = 0.0
 
 # WORLD LIMITS:
-const BOTTOM_LIMIT = 50
+const BOTTOM_LIMIT = 999 # BOTTOM-LIMIT (si es necesario)
 
 # RESPAWN-POSITION:
 const RESPAWN_POSITION = Vector2(-1578, -100)
@@ -56,7 +56,7 @@ func _physics_process(delta):
 	_movimiento_horizontal(delta)
 	_salto(delta)
 	_aplicar_clamps()
-	#_check_world_bottom_limit()
+	_check_world_bottom_limit()
 	
 	move_and_slide()
 	_update_animation()
@@ -137,8 +137,8 @@ func _on_flag_pole_body_entered(body):
 		velocity = Vector2.ZERO
 		_reset_estados_cambio_estado_a("transicion_flag_pole")
 		var tween = create_tween()
-		var new_pos = GlobalValues.flag_sprite.global_position + Vector2(0, 128) # o ajusta según altura
-		tween.tween_property(GlobalValues.flag_sprite, "global_position", new_pos, 1.0)
+		var bottom_pos = GlobalValues.flag_sprite.global_position + Vector2(0, 128) # 128 = posY bandera suelo
+		tween.tween_property(GlobalValues.flag_sprite, "global_position", bottom_pos, 2.1)
 
 func _on_goal_zone_body_entered(body):
 	if body == self:
