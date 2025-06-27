@@ -136,6 +136,9 @@ func _on_flag_pole_body_entered(body):
 		print("bandera")
 		velocity = Vector2.ZERO
 		_reset_estados_cambio_estado_a("transicion_flag_pole")
+		var tween = create_tween()
+		var new_pos = GlobalValues.flag_sprite.global_position + Vector2(0, 128) # o ajusta según altura
+		tween.tween_property(GlobalValues.flag_sprite, "global_position", new_pos, 1.0)
 
 func _on_goal_zone_body_entered(body):
 	if body == self:
@@ -149,6 +152,10 @@ func check_start_go_goal_zone():
 	if is_on_floor():
 		velocity = Vector2(abs(VEL_MAX / 9), 0)
 		_reset_estados_cambio_estado_a("transicion_goal_zone")
+
+#func check_start_go_goal_zone():
+	#var tween = create_tween()
+	#tween.tween_property(self, "global_position", Vector2(-1500, -80), 1.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 # RESETEAR-RESPAWNEAR JUGADOR A SU POSICION INICIAL:
 func _reset_position():

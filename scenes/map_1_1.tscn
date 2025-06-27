@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=4 uid="uid://bxaqji5l0cw2b"]
+[gd_scene load_steps=12 format=4 uid="uid://bxaqji5l0cw2b"]
 
 [ext_resource type="Texture2D" uid="uid://cseipw28w4h5c" path="res://textures/SuperMarioBros-World1-1-no-colision.png" id="1_a6cnk"]
 [ext_resource type="Texture2D" uid="uid://dj4ouj8g7fus7" path="res://textures/super_mario.png" id="2_vtsiv"]
+[ext_resource type="Texture2D" uid="uid://us4v22gn3uue" path="res://textures/bandera-ssheet_alpha.png" id="3_vtsiv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_shhok"]
 texture = ExtResource("2_vtsiv")
@@ -147,3 +148,7 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FlagPole"]
 position = Vector2(3.5, -85.5)
 shape = SubResource("RectangleShape2D_lvdtj")
+
+[node name="FlagSprite" type="Sprite2D" parent="."]
+position = Vector2(1472, -152)
+texture = ExtResource("3_vtsiv")
