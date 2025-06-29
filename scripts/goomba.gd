@@ -13,13 +13,7 @@ var acel_gravedad = 0.0
 
 # FUNCION EJECUTANDOSE A 60 FPS:
 func _physics_process(delta):
-	## APLICAR GRAVEDAD:
-	if not is_on_floor():
-		acel_gravedad += GlobalValues.GRAVEDAD * delta
-		velocity.y += acel_gravedad
-	else:
-		acel_gravedad = 0
-		velocity.y = 0
+	aplicar_gravedad(delta)
 	
 	velocity.x = direccion * VEL_X
 	
@@ -33,3 +27,12 @@ func _physics_process(delta):
 	if global_position.x < GlobalValues.LIMITE_IZ + 30 and direccion == -1:
 		direccion = 1
 		sprite.flip_h = false
+
+# APLICAR GRAVEDAD:
+func aplicar_gravedad(delta):
+	if not is_on_floor():
+		acel_gravedad += GlobalValues.GRAVEDAD * delta
+		velocity.y += acel_gravedad
+	else:
+		acel_gravedad = 0
+		velocity.y = 0

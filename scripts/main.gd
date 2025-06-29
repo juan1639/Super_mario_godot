@@ -17,6 +17,7 @@ extends Node2D
 # FUNCION INICIALIZADORA:
 func _ready():
 	GlobalValues.flag_sprite = $Map_1_1/FlagSprite
+	GlobalValues.ref_tilemap = $Map_1_1/TileMapLayer
 	
 	for spawn_point in goomba_spawns.get_children():
 		#print("Instanciando Goomba en ", spawn_point.global_position)
