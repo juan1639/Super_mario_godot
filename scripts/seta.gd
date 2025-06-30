@@ -1,24 +1,26 @@
 extends CharacterBody2D
 
+# ACTIVA:
+var activa = false
+
 # MOVIMIENTO HORIZONTAL:
-const VEL_X = 20
-var direccion = -1
+const VEL_X = 35
+var direccion = 1
 
 # GRAVEDAD:
 var acel_gravedad = 0.0
 
 # REFERENCIAS:
 @onready var sprite = $Sprite2D
-@onready var animationPlayer = $AnimationPlayer
 
 # FUNCION EJECUTANDOSE A 60 FPS:
 func _physics_process(delta):
-	aplicar_gravedad(delta)
-	
-	velocity.x = direccion * VEL_X
+	if activa:
+		aplicar_gravedad(delta)
+		velocity.x = direccion * VEL_X
 	
 	move_and_slide()
-	animationPlayer.play("Walk")
+	check_bottom_limit_y_desactivar()
 	
 	if is_on_wall():
 		direccion *= -1
@@ -31,3 +33,10 @@ func aplicar_gravedad(delta):
 	else:
 		acel_gravedad = 0
 		velocity.y = 0
+
+# CHECK BOTTOM-LIMIT -> (activa=false):
+func check_bottom_limit_y_desactivar():
+	if global_position.y > GlobalValues.BOTTOM_LIMIT:
+		global_position = Vector2(-1500, -500)
+		velocity = Vector2(0, 0)
+		activa = false

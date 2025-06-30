@@ -137,7 +137,7 @@ func restore_block(tilemap: TileMapLayer, tile_pos: Vector2i, source_id: int, TI
 	tilemap.set_cell(tile_pos, source_id, TIPO_BLOQUE)
 
 func impacto_bloques_tween(tilemap, tile_pos, source_id, TIPO_BLOQUE):
-	print("¡Tile detectado!")
+	#print("¡Tile detectado!")
 	# Reemplazar tile y setear salto_presionado a false:
 	tilemap.set_cell(tile_pos, source_id, Vector2i(0, 0))
 	salto_presionado = false
@@ -151,7 +151,6 @@ func impacto_bloques_tween(tilemap, tile_pos, source_id, TIPO_BLOQUE):
 	
 	if TIPO_BLOQUE == Vector2i(2, 1):
 		GlobalValues.bloqueSprite.get_child(0).frame = 13
-		GlobalValues.monedaSprite.global_position = item_pos
 		moneda_tween(item_pos)
 	elif TIPO_BLOQUE == Vector2i(3, 1):
 		GlobalValues.bloqueSprite.get_child(0).frame = 14
@@ -178,15 +177,26 @@ func impacto_bloques_tween(tilemap, tile_pos, source_id, TIPO_BLOQUE):
 	#moneda.global_position = tilemap.map_to_local(tile_pos)
 	#get_tree().current_scene.add_child(moneda)
 
+# CREAR TWEEN MONEDA ROTANDO HACIA ARRIBA:
 func moneda_tween(item_pos):
-	var tween = create_tween()
-	var offset = item_pos + Vector2(0, -32)
+	print(item_pos, GlobalValues.lista_setas)
 	
-	tween.tween_property(GlobalValues.monedaSprite, "global_position", offset, 0.4)\
-		.set_trans(Tween.TRANS_LINEAR)
-	
-	# DESAPARECER:
-	tween.tween_callback(Callable(self, "fin_moneda_ocultar"))
+	if item_pos in GlobalValues.lista_setas:
+		GlobalValues.setaSprite.get_child(0).global_position = item_pos
+		GlobalValues.setaSprite.get_child(0).activa = true
+	else:
+		GlobalValues.monedaSprite.global_position = item_pos
+		
+		# CREAR TWEEN MONEDA ROTANDO HACIA ARRIBA:
+		var tween = create_tween()
+		var offset = item_pos + Vector2(0, -32)
+		print("item_pos", item_pos)
+		
+		tween.tween_property(GlobalValues.monedaSprite, "global_position", offset, 0.3)\
+			.set_trans(Tween.TRANS_LINEAR)
+		
+		# DESAPARECER:
+		tween.tween_callback(Callable(self, "fin_moneda_ocultar"))
 
 func fin_moneda_ocultar():
 	GlobalValues.monedaSprite.global_position += Vector2(0, -500)

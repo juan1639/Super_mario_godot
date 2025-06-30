@@ -1,11 +1,12 @@
 extends Node2D
 
-# REFERENCIAS A GOOMBA:
+# REFERENCIAS A SPRITES (GOOMBA, etc.):
 @onready var goomba_scene = preload("res://scenes/goomba.tscn")
 @onready var goomba_spawns = $GoombaSpawns
 
 @onready var bloquesSprites_scene = preload("res://scenes/bloques_sprites.tscn")
 @onready var moneda_scene = preload("res://scenes/moneda.tscn")
+@onready var seta_scene = preload("res://scenes/seta.tscn")
 
 # REFERENCIA A AREA2D (FallZone):
 @onready var fallZones = $Map_1_1/FallZones
@@ -25,13 +26,18 @@ func _ready():
 	
 	# INSTANCIA DE UNA MONEDA-SPRITE (Posteriormente solo hace falta cambiar posicion):
 	GlobalValues.monedaSprite = moneda_scene.instantiate()
-	GlobalValues.monedaSprite.global_position = Vector2(-1400, -120)
+	GlobalValues.monedaSprite.global_position = Vector2(-1400, -500)
 	add_child(GlobalValues.monedaSprite)
 	
 	# INSTANCIA DE UN BLOQUE-SPRITE (Posteriormente solo hace falta cambiar posicion):
 	GlobalValues.bloqueSprite = bloquesSprites_scene.instantiate()
-	GlobalValues.bloqueSprite.global_position = Vector2(-1300, -300)
+	GlobalValues.bloqueSprite.global_position = Vector2(-1300, -500)
 	add_child(GlobalValues.bloqueSprite)
+	
+	# INSTANCIA DE UNA SETA (Posteriormente solo hace falta cambiar posicion):
+	GlobalValues.setaSprite = seta_scene.instantiate()
+	GlobalValues.setaSprite.global_position = Vector2(-1500, -500)
+	add_child(GlobalValues.setaSprite)
 	
 	# INSTANCIAR GOOMBAS:
 	for spawn_point in goomba_spawns.get_children():

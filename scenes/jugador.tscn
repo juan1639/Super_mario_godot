@@ -222,7 +222,7 @@ _data = {
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["Jugador", "JugadorGlobal"]]
 position = Vector2(-1578, -33)
 collision_layer = 4
-collision_mask = 51
+collision_mask = 179
 script = ExtResource("1_lhlt4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]

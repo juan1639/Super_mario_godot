@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://dco8kw0dxmv51"]
+
+[ext_resource type="Script" uid="uid://hrprafrsyvep" path="res://scripts/seta.gd" id="1_gtacy"]
+[ext_resource type="Texture2D" uid="uid://dj4ouj8g7fus7" path="res://textures/super_mario.png" id="1_ra3kq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gtacy"]
+size = Vector2(16, 16)
+
+[node name="Seta" type="Node2D"]
+
+[node name="Seta" type="CharacterBody2D" parent="."]
+collision_layer = 128
+collision_mask = 5
+script = ExtResource("1_gtacy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Seta"]
+shape = SubResource("RectangleShape2D_gtacy")
+
+[node name="Sprite2D" type="Sprite2D" parent="Seta"]
+texture = ExtResource("1_ra3kq")
+hframes = 11
+vframes = 4
+frame = 11
