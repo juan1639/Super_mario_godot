@@ -107,6 +107,7 @@ func salto(delta):
 		else:
 			salto_presionado = false
 
+# IDENTIFICAR TILE (EN LA POSICION DE MARIO):
 func identificar_tile():
 	var tilemap = GlobalValues.ref_tilemap
 	
@@ -128,6 +129,33 @@ func identificar_tile():
 		print("¡Tile de interrogación detectado!")
 	elif atlas_coords == Vector2i(3, 1):
 		print("¡Tile bloque-ladrillo detectado!")
+		# Reemplazar tile y setear salto_presionado a false:
+		tilemap.set_cell(tile_pos, source_id, Vector2i(0, 0))
+		salto_presionado = false
+		velocity.y = 0
+		
+		# INSTANCIAR UN BLOQUE-SPRITE (IDENTICO AL TILE):
+		var pos_mario_cabeza = global_position + Vector2(0, -16)
+		var bloque_pos = tilemap.local_to_map(tilemap.to_local(pos_mario_cabeza))
+		var bloque_pos2 = tilemap.map_to_local(bloque_pos) + tilemap.position
+		GlobalValues.bloqueSprite.global_position = bloque_pos2
+		
+		# TWEEN DEL TILE (desplazamiento hacia arriba):
+		var tween = create_tween()
+		var startPos = GlobalValues.bloqueSprite.global_position
+		var offset = GlobalValues.bloqueSprite.global_position + Vector2(0, -8)
+		
+		tween.tween_property(GlobalValues.bloqueSprite, "global_position", offset, 0.08)\
+			.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+		
+		tween.tween_property(GlobalValues.bloqueSprite, "global_position", startPos, 0.08)\
+			.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+		
+		# VOLVER A COLOCAR EL TILE:
+		tween.tween_callback(Callable(self, "restore_block").bind(tilemap, tile_pos, source_id))
+
+func restore_block(tilemap: TileMapLayer, tile_pos: Vector2i, source_id: int):
+	tilemap.set_cell(tile_pos, source_id, Vector2i(3, 1))
 
 #func reemplazar_tile():
 	#tilemap.set_cell(0, tile_pos, new_tile_id) # Cambia el tile

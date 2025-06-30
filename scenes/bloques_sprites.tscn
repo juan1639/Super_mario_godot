@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://tchbgfennk12"]
+
+[ext_resource type="Texture2D" uid="uid://dj4ouj8g7fus7" path="res://textures/super_mario.png" id="1_t5uqh"]
+
+[node name="BloquesSprites" type="Node2D"]
+z_index = 5
+
+[node name="BloqueSprite" type="Sprite2D" parent="."]
+z_index = 5
+texture = ExtResource("1_t5uqh")
+hframes = 11
+vframes = 4
+frame = 14
