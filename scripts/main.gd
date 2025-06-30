@@ -5,6 +5,7 @@ extends Node2D
 @onready var goomba_spawns = $GoombaSpawns
 
 @onready var bloquesSprites_scene = preload("res://scenes/bloques_sprites.tscn")
+@onready var moneda_scene = preload("res://scenes/moneda.tscn")
 
 # REFERENCIA A AREA2D (FallZone):
 @onready var fallZones = $Map_1_1/FallZones
@@ -21,6 +22,11 @@ func _ready():
 	# REFERENCIAS A LA BANDERA Y AL TILEMAP:
 	GlobalValues.flag_sprite = $Map_1_1/FlagSprite
 	GlobalValues.ref_tilemap = $Map_1_1/TileMapLayer
+	
+	# INSTANCIA DE UNA MONEDA-SPRITE (Posteriormente solo hace falta cambiar posicion):
+	GlobalValues.monedaSprite = moneda_scene.instantiate()
+	GlobalValues.monedaSprite.global_position = Vector2(-1400, -120)
+	add_child(GlobalValues.monedaSprite)
 	
 	# INSTANCIA DE UN BLOQUE-SPRITE (Posteriormente solo hace falta cambiar posicion):
 	GlobalValues.bloqueSprite = bloquesSprites_scene.instantiate()

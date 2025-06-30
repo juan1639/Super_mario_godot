@@ -147,9 +147,12 @@ func impacto_bloques_tween(tilemap, tile_pos, source_id, TIPO_BLOQUE):
 	var pos_mario_cabeza = global_position + Vector2(0, -16)
 	var bloque_pos = tilemap.local_to_map(tilemap.to_local(pos_mario_cabeza))
 	var bloque_pos2 = tilemap.map_to_local(bloque_pos) + tilemap.position
+	var item_pos = bloque_pos2 + Vector2(0, -16)
 	
 	if TIPO_BLOQUE == Vector2i(2, 1):
 		GlobalValues.bloqueSprite.get_child(0).frame = 13
+		GlobalValues.monedaSprite.global_position = item_pos
+		moneda_tween(item_pos)
 	elif TIPO_BLOQUE == Vector2i(3, 1):
 		GlobalValues.bloqueSprite.get_child(0).frame = 14
 	
@@ -174,6 +177,19 @@ func impacto_bloques_tween(tilemap, tile_pos, source_id, TIPO_BLOQUE):
 	#var moneda = preload("res://moneda.tscn").instantiate()
 	#moneda.global_position = tilemap.map_to_local(tile_pos)
 	#get_tree().current_scene.add_child(moneda)
+
+func moneda_tween(item_pos):
+	var tween = create_tween()
+	var offset = item_pos + Vector2(0, -32)
+	
+	tween.tween_property(GlobalValues.monedaSprite, "global_position", offset, 0.4)\
+		.set_trans(Tween.TRANS_LINEAR)
+	
+	# DESAPARECER:
+	tween.tween_callback(Callable(self, "fin_moneda_ocultar"))
+
+func fin_moneda_ocultar():
+	GlobalValues.monedaSprite.global_position += Vector2(0, -500)
 
 func aplicar_clamps():
 	# CLAMP Velocity.y:
