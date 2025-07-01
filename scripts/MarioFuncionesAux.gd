@@ -1,7 +1,7 @@
 extends Node
 
 # IDENTIFICAR TILE (EN LA POSICION DE MARIO):
-func identificar_tile(global_position, salto, sonido_coin):
+func identificar_tile(global_position, salto, timer, sonido_coin):
 	var tilemap = GlobalValues.ref_tilemap
 	
 	# OBTENEMOS EL TILE EN LA POSICION DE MARIO (y restamos (0,-1) encima de mario)
@@ -20,6 +20,11 @@ func identificar_tile(global_position, salto, sonido_coin):
 	# TILE-INTERROGACION = (2,1) | TILE-BLOQUE-LADRILLO = (3,1):
 	const INTERROGACION = Vector2i(2, 1)
 	const BLOQUE_LADRILLO = Vector2i(3, 1)
+	
+	if timer.time_left > 0.0:
+		return
+	
+	timer.start(0.2)
 	
 	if atlas_coords == INTERROGACION:
 		impacto_bloques_tween(tilemap, tile_pos, source_id, INTERROGACION, global_position, salto, sonido_coin)
@@ -78,11 +83,15 @@ func moneda_tween(item_pos, sonido_coin):
 	print(item_pos, GlobalValues.lista_setas)
 	
 	if item_pos in GlobalValues.lista_setas:
-		GlobalValues.setaSprite.get_child(0).global_position = item_pos
-		GlobalValues.setaSprite.get_child(0).activa = true
-	else:
+		if not item_pos in GlobalValues.lista_desactivados:
+			GlobalValues.setaSprite.get_child(0).global_position = item_pos
+			GlobalValues.setaSprite.get_child(0).activa = true
+			GlobalValues.lista_desactivados.append(item_pos)
+	
+	elif not item_pos in GlobalValues.lista_desactivados:
 		sonido_coin.play()
 		GlobalValues.monedaSprite.global_position = item_pos
+		GlobalValues.lista_desactivados.append(item_pos)
 		
 		# CREAR TWEEN MONEDA ROTANDO HACIA ARRIBA:
 		var tween = create_tween()

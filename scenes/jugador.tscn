@@ -248,6 +248,9 @@ libraries = {
 &"": SubResource("AnimationLibrary_3djcq")
 }
 
+[node name="Timer" type="Timer" parent="CharacterBody2D"]
+one_shot = true
+
 [node name="SonidoSalto" type="AudioStreamPlayer2D" parent="CharacterBody2D"]
 stream = ExtResource("3_28edd")
 

@@ -26,6 +26,7 @@ const RESPAWN_POSITION = Vector2(-1578, -100)
 # REFERENCIAS:
 @onready var sprite = $Sprite2D
 @onready var animationPlayer = $AnimationPlayer
+@onready var timer = $Timer
 @onready var sonido_salto = $SonidoSalto
 @onready var sonido_coin = $SonidoCoin
 
@@ -34,6 +35,7 @@ func _ready():
 	reset_estados_cambio_estado_a("en_juego")
 	reset_position()
 	sonido_salto.volume_db = -20.0
+	timer.start(0.2)
 
 # FUNCION EJECUTANDOSE A 60 FPS:
 func _physics_process(delta):
@@ -66,7 +68,7 @@ func _physics_process(delta):
 	
 	move_and_slide()
 	update_animation()
-	MarioFuncionesAux.identificar_tile(global_position, salto, sonido_coin)
+	MarioFuncionesAux.identificar_tile(global_position, salto, timer, sonido_coin)
 
 # APLICAR GRAVEDAD:
 func aplicar_gravedad(delta):

@@ -30,3 +30,5 @@ var estado_juego = {
 var lista_setas = [
 	Vector2(-1352, -72), Vector2(-664, -88), Vector2(-440, -72), Vector2(40, -136)
 ]
+
+var lista_desactivados = []
