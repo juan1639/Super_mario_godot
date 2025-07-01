@@ -4,7 +4,7 @@ extends CharacterBody2D
 var activa = false
 
 # MOVIMIENTO HORIZONTAL:
-const VEL_X = 35
+const VEL_X = 60
 var direccion = 1
 
 # GRAVEDAD:

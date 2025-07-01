@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 # MOVIMIENTO HORIZONTAL:
-const VEL_X = 20
+const VEL_X = 30
 var direccion = -1
 
 # GRAVEDAD:

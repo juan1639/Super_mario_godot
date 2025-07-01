@@ -22,17 +22,16 @@ func identificar_tile(global_position, salto, sonido_coin):
 	const BLOQUE_LADRILLO = Vector2i(3, 1)
 	
 	if atlas_coords == INTERROGACION:
-		impacto_bloques_tween(tilemap, tile_pos, source_id, INTERROGACION, global_position, salto)
-		sonido_coin.play()
+		impacto_bloques_tween(tilemap, tile_pos, source_id, INTERROGACION, global_position, salto, sonido_coin)
 	elif atlas_coords == BLOQUE_LADRILLO:
-		impacto_bloques_tween(tilemap, tile_pos, source_id, BLOQUE_LADRILLO, global_position, salto)
+		impacto_bloques_tween(tilemap, tile_pos, source_id, BLOQUE_LADRILLO, global_position, salto, sonido_coin)
 
 # VOLVER A COLOCAR EL TILE (tras el tween):
 func restore_block(tilemap: TileMapLayer, tile_pos: Vector2i, source_id: int, TIPO_BLOQUE: Vector2i):
 	tilemap.set_cell(tile_pos, source_id, TIPO_BLOQUE)
 
 # TWEEN TILES:
-func impacto_bloques_tween(tilemap, tile_pos, source_id, TIPO_BLOQUE, global_position, salto):
+func impacto_bloques_tween(tilemap, tile_pos, source_id, TIPO_BLOQUE, global_position, salto, sonido_coin):
 	# SUSTITUIR TEMPORALMENTE POR TILE(0,0)=CIELO_AZUL (efecto desaparece temporalmente):
 	tilemap.set_cell(tile_pos, source_id, Vector2i(0, 0))
 	# RESETEAR salto["presionado"]:
@@ -47,7 +46,7 @@ func impacto_bloques_tween(tilemap, tile_pos, source_id, TIPO_BLOQUE, global_pos
 	
 	if TIPO_BLOQUE == Vector2i(2, 1):
 		GlobalValues.bloqueSprite.get_child(0).frame = 13
-		moneda_tween(item_pos)
+		moneda_tween(item_pos, sonido_coin)
 	elif TIPO_BLOQUE == Vector2i(3, 1):
 		GlobalValues.bloqueSprite.get_child(0).frame = 14
 	
@@ -75,13 +74,14 @@ func impacto_bloques_tween(tilemap, tile_pos, source_id, TIPO_BLOQUE, global_pos
 	#get_tree().current_scene.add_child(moneda)
 
 # CREAR TWEEN MONEDA ROTANDO HACIA ARRIBA:
-func moneda_tween(item_pos):
+func moneda_tween(item_pos, sonido_coin):
 	print(item_pos, GlobalValues.lista_setas)
 	
 	if item_pos in GlobalValues.lista_setas:
 		GlobalValues.setaSprite.get_child(0).global_position = item_pos
 		GlobalValues.setaSprite.get_child(0).activa = true
 	else:
+		sonido_coin.play()
 		GlobalValues.monedaSprite.global_position = item_pos
 		
 		# CREAR TWEEN MONEDA ROTANDO HACIA ARRIBA:
