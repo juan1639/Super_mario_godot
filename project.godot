@@ -18,10 +18,10 @@ config/icon="res://icon.svg"
 [autoload]
 
 GlobalValues="*res://scripts/GlobalValues.gd"
+MarioFuncionesAux="*res://scripts/MarioFuncionesAux.gd"
 
 [display]
 
-window/size/mode=3
 window/stretch/mode="canvas_items"
 
 [global_group]
