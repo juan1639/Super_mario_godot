@@ -1,7 +1,7 @@
 extends Node
 
 # IDENTIFICAR TILE (EN LA POSICION DE MARIO):
-func identificar_tile(global_position, salto):
+func identificar_tile(global_position, salto, sonido_coin):
 	var tilemap = GlobalValues.ref_tilemap
 	
 	# OBTENEMOS EL TILE EN LA POSICION DE MARIO (y restamos (0,-1) encima de mario)
@@ -23,6 +23,7 @@ func identificar_tile(global_position, salto):
 	
 	if atlas_coords == INTERROGACION:
 		impacto_bloques_tween(tilemap, tile_pos, source_id, INTERROGACION, global_position, salto)
+		sonido_coin.play()
 	elif atlas_coords == BLOQUE_LADRILLO:
 		impacto_bloques_tween(tilemap, tile_pos, source_id, BLOQUE_LADRILLO, global_position, salto)
 

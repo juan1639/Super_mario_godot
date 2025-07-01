@@ -18,6 +18,9 @@ extends Node2D
 # REFERENCIA A MARIO/JUGADOR:
 @onready var mario = $Jugador/CharacterBody2D
 
+# REFERENCIA A LA MUSICA-FONDO:
+@onready var musicaFondo = $MusicaFondo
+
 # FUNCION INICIALIZADORA:
 func _ready():
 	# REFERENCIAS A LA BANDERA Y AL TILEMAP:
@@ -53,3 +56,7 @@ func _ready():
 	# CONECTAR SEÑALES de FlagPole y GoalZone:
 	flagPole.connect("body_entered", Callable(mario, "_on_flag_pole_body_entered"))
 	goalZone.connect("body_entered", Callable(mario, "_on_goal_zone_body_entered"))
+	
+	# START PLAY MUSIC:
+	musicaFondo.play()
+	musicaFondo.volume_db = -12.0

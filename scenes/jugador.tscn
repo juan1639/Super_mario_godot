@@ -1,7 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://4hcgtj15ld1m"]
+[gd_scene load_steps=12 format=3 uid="uid://4hcgtj15ld1m"]
 
 [ext_resource type="Script" uid="uid://dq1nn6saist38" path="res://scripts/character_body_2d.gd" id="1_lhlt4"]
 [ext_resource type="Texture2D" uid="uid://bp22hb60foxl4" path="res://textures/mario-ssheet-1.png" id="2_28edd"]
+[ext_resource type="AudioStream" uid="uid://bawn4asjbcb" path="res://audio/jumpbros.ogg" id="3_28edd"]
+[ext_resource type="AudioStream" uid="uid://mlouk8c5m5yh" path="res://audio/p-ping.mp3" id="4_k64kw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k64kw"]
 size = Vector2(12, 16)
@@ -245,3 +247,10 @@ limit_bottom = 0
 libraries = {
 &"": SubResource("AnimationLibrary_3djcq")
 }
+
+[node name="SonidoSalto" type="AudioStreamPlayer2D" parent="CharacterBody2D"]
+stream = ExtResource("3_28edd")
+
+[node name="SonidoCoin" type="AudioStreamPlayer2D" parent="CharacterBody2D"]
+stream = ExtResource("4_k64kw")
+volume_db = -24.0
