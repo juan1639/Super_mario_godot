@@ -1,7 +1,6 @@
 extends Node
 
-# CONTANTAES COMPARTIDAS:
-# GRAVEDAD:
+# CONSTANTES GLOBALES:
 const GRAVEDAD = 90.0
 
 # LIMITES MUNDO:
@@ -9,7 +8,7 @@ const LIMITE_IZ = -1700
 const LIMITE_DE = 1700
 const BOTTOM_LIMIT = 999 # BOTTOM-LIMIT (si es necesario)
 
-# REFERENCIA A LA BANDERA-SPRITE:
+# VARIABLES GLOBALES:
 var ref_tilemap: TileMapLayer = null
 var flag_sprite: Sprite2D = null
 var bloqueSprite: Node2D = null

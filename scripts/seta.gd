@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-# ACTIVA:
+# ACTIVA bool:
 var activa = false
 
 # MOVIMIENTO HORIZONTAL:
@@ -39,4 +39,5 @@ func check_bottom_limit_y_desactivar():
 	if global_position.y > GlobalValues.BOTTOM_LIMIT:
 		global_position = Vector2(-1500, -500)
 		velocity = Vector2(0, 0)
+		direccion = 1
 		activa = false

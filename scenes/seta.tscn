@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dco8kw0dxmv51"]
 
 [ext_resource type="Script" uid="uid://hrprafrsyvep" path="res://scripts/seta.gd" id="1_gtacy"]
-[ext_resource type="Texture2D" uid="uid://dj4ouj8g7fus7" path="res://textures/super_mario.png" id="1_ra3kq"]
+[ext_resource type="Texture2D" uid="uid://bcfd1ylyb2083" path="res://textures/smb-seta-alpha.png" id="2_gtacy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gtacy"]
 size = Vector2(16, 16)
@@ -17,7 +17,4 @@ script = ExtResource("1_gtacy")
 shape = SubResource("RectangleShape2D_gtacy")
 
 [node name="Sprite2D" type="Sprite2D" parent="Seta"]
-texture = ExtResource("1_ra3kq")
-hframes = 11
-vframes = 4
-frame = 11
+texture = ExtResource("2_gtacy")

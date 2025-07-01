@@ -133,9 +133,11 @@ func identificar_tile():
 	elif atlas_coords == BLOQUE_LADRILLO:
 		impacto_bloques_tween(tilemap, tile_pos, source_id, BLOQUE_LADRILLO)
 
+# VOLVER A COLOCAR EL TILE (tras el tween):
 func restore_block(tilemap: TileMapLayer, tile_pos: Vector2i, source_id: int, TIPO_BLOQUE: Vector2i):
 	tilemap.set_cell(tile_pos, source_id, TIPO_BLOQUE)
 
+# TWEEN TILES:
 func impacto_bloques_tween(tilemap, tile_pos, source_id, TIPO_BLOQUE):
 	#print("¡Tile detectado!")
 	# Reemplazar tile y setear salto_presionado a false:
@@ -201,6 +203,7 @@ func moneda_tween(item_pos):
 func fin_moneda_ocultar():
 	GlobalValues.monedaSprite.global_position += Vector2(0, -500)
 
+# WORLD CLAMPS:
 func aplicar_clamps():
 	# CLAMP Velocity.y:
 	velocity.y = clamp(velocity.y, -1000, 1000)

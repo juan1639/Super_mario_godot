@@ -46,10 +46,10 @@ func _ready():
 		goomba.global_position = spawn_point.global_position
 		add_child(goomba)
 	
-	# Conectar señal de DeadZone
+	# CONECTAR SEÑAL de fallZone:
 	for fallZone in fallZones.get_children():
 		fallZone.connect("body_entered", Callable(mario, "_on_fall_zone_body_entered"))
 	
-	# Conectar señales de FlagPole y GoalZone:
+	# CONECTAR SEÑALES de FlagPole y GoalZone:
 	flagPole.connect("body_entered", Callable(mario, "_on_flag_pole_body_entered"))
 	goalZone.connect("body_entered", Callable(mario, "_on_goal_zone_body_entered"))
