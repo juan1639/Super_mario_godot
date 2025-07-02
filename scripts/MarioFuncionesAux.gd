@@ -88,6 +88,7 @@ func moneda_tween(item_pos, sonido_coin):
 		if not item_pos in GlobalValues.lista_desactivados:
 			GlobalValues.setaSprite.get_child(0).global_position = item_pos
 			GlobalValues.setaSprite.get_child(0).activa = true
+			GlobalValues.setaSprite.get_child(0).sonido_seta.play()
 			GlobalValues.lista_desactivados.append(item_pos)
 	
 	elif not item_pos in GlobalValues.lista_desactivados:
@@ -117,6 +118,7 @@ func item_ladrillos(item_pos, sonido_coin):
 		if not item_pos in GlobalValues.lista_desactivados:
 			GlobalValues.estrellaSprite.global_position = item_pos
 			GlobalValues.estrellaSprite.activa = true
+			GlobalValues.setaSprite.get_child(0).sonido_seta.play()
 			GlobalValues.lista_desactivados.append(item_pos)
 	
 	elif item_pos in GlobalValues.lista_repetitivas:

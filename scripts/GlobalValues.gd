@@ -16,6 +16,8 @@ var monedaSprite: Sprite2D = null
 var setaSprite: Node2D = null
 var estrellaSprite: CharacterBody2D = null
 
+var musicaFondo: AudioStreamPlayer2D = null
+
 # ESTADOS DEL JUEGO
 var estado_juego = {
 	"prejuego": true,

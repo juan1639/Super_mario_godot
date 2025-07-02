@@ -29,6 +29,7 @@ const RESPAWN_POSITION = Vector2(-1578, -100)
 @onready var timer = $Timer
 @onready var sonido_salto = $SonidoSalto
 @onready var sonido_coin = $SonidoCoin
+@onready var musica_level_up = $MusicaLevelUp
 
 # FUNCION INICIALIZADORA:
 func _ready():
@@ -144,10 +145,11 @@ func _on_fall_zone_body_entered(body):
 
 func _on_flag_pole_body_entered(body):
 	if body == self:
-		print("bandera")
 		velocity = Vector2.ZERO
 		salto["presionado"] = false
 		reset_estados_cambio_estado_a("transicion_flag_pole")
+		GlobalValues.musicaFondo.stop()
+		musica_level_up.play()
 		var tween = create_tween()
 		var bottom_pos = GlobalValues.flag_sprite.global_position + Vector2(0, 128) # 128 = posY bandera suelo
 		tween.tween_property(GlobalValues.flag_sprite, "global_position", bottom_pos, 2.1)

@@ -12,6 +12,7 @@ var acel_gravedad = 0.0
 
 # REFERENCIAS:
 @onready var sprite = $Sprite2D
+@onready var sonido_seta = $SonidoSeta
 
 # FUNCION EJECUTANDOSE A 60 FPS:
 func _physics_process(delta):
