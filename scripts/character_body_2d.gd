@@ -27,8 +27,11 @@ const RESPAWN_POSITION = Vector2(-1578, -100)
 @onready var sprite = $Sprite2D
 @onready var animationPlayer = $AnimationPlayer
 @onready var timer = $Timer
+@onready var timerColision = $TimerColision
 @onready var sonido_salto = $SonidoSalto
 @onready var sonido_coin = $SonidoCoin
+@onready var sonido_lose_life = $SonidoLoseLife
+@onready var sonido_aplastar = $SonidoAplastar
 @onready var musica_level_up = $MusicaLevelUp
 
 # FUNCION INICIALIZADORA:
@@ -37,6 +40,7 @@ func _ready():
 	reset_position()
 	sonido_salto.volume_db = -20.0
 	timer.start(0.2)
+	timerColision.start(0.1)
 
 # FUNCION EJECUTANDOSE A 60 FPS:
 func _physics_process(delta):
@@ -47,7 +51,7 @@ func _physics_process(delta):
 		update_animation()
 		return
 	
-	if GlobalValues.estado_juego["transicion_goal_zone"]:
+	if GlobalValues.estado_juego["transicion_goal_zone"] or GlobalValues.estado_juego["transicion_vida_menos"]:
 		aplicar_gravedad(delta)
 		move_and_slide()
 		update_animation()
@@ -78,7 +82,8 @@ func aplicar_gravedad(delta):
 		velocity.y += acel_gravedad
 	else:
 		acel_gravedad = 0
-		velocity.y = 0
+		if not GlobalValues.estado_juego["transicion_vida_menos"]:
+			velocity.y = 0
 
 # APLICAR GRAVEDAD LEVE:
 func aplicar_gravedad_leve(delta):
@@ -131,6 +136,10 @@ func update_animation():
 		animationPlayer.play("FlagPole")
 		return
 	
+	if GlobalValues.estado_juego["transicion_vida_menos"]:
+		animationPlayer.play("LoseLife")
+		return
+	
 	if not is_on_floor():
 		animationPlayer.play("Jump")
 	elif velocity.x != 0:
@@ -160,6 +169,25 @@ func _on_goal_zone_body_entered(body):
 		velocity = Vector2.ZERO
 		visible = false
 		reset_estados_cambio_estado_a("transicion_fireworks")
+
+func _on_goomba_body_entered(body):
+	if timerColision.time_left > 0:
+		return
+	
+	if body == self and GlobalValues.estado_juego["en_juego"]:
+		print("colision vs Goomba")
+		reset_estados_cambio_estado_a("transicion_vida_menos")
+		velocity = Vector2(0, POTENCIA_SALTO * 2)
+		GlobalValues.musicaFondo.stop()
+		sonido_lose_life.play()
+
+func _on_aplastar_goomba_body_entered(body, goomba):
+	if body == self and GlobalValues.estado_juego["en_juego"]:
+		print("Aplasta-Goomba")
+		timerColision.start(0.1)
+		goomba.queue_free()
+		velocity = Vector2(velocity.x, POTENCIA_SALTO * 2.8)
+		sonido_aplastar.play()
 
 # CHECK START-GO-GOAL-ZONE:
 func check_start_go_goal_zone():

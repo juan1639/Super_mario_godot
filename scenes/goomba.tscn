@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b2jpccyukjvaa"]
+[gd_scene load_steps=10 format=3 uid="uid://b2jpccyukjvaa"]
 
 [ext_resource type="Texture2D" uid="uid://brof5063rh8o6" path="res://textures/goomba-ssheet-alpha.png" id="1_21hcc"]
 [ext_resource type="Script" uid="uid://q12qkrusnvc8" path="res://scripts/goomba.gd" id="1_s1jgw"]
@@ -133,6 +133,12 @@ _data = {
 &"Walk": SubResource("Animation_s1jgw")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s1jgw"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fgpj4"]
+size = Vector2(10, 9)
+
 [node name="Goomba" type="Node2D"]
 
 [node name="Goomba" type="CharacterBody2D" parent="."]
@@ -152,3 +158,18 @@ hframes = 3
 libraries = {
 &"": SubResource("AnimationLibrary_fgpj4")
 }
+
+[node name="Area2D" type="Area2D" parent="Goomba"]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goomba/Area2D"]
+shape = SubResource("RectangleShape2D_s1jgw")
+
+[node name="Area2D2" type="Area2D" parent="Goomba"]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Goomba/Area2D2"]
+position = Vector2(0, -4.5)
+shape = SubResource("RectangleShape2D_fgpj4")
