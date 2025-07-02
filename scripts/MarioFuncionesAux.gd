@@ -20,13 +20,14 @@ func identificar_tile(global_position, salto, timer, sonido_coin):
 	# TILE-INTERROGACION = (2,1) | TILE-BLOQUE-LADRILLO = (3,1):
 	const INTERROGACION = Vector2i(2, 1)
 	const BLOQUE_LADRILLO = Vector2i(3, 1)
+	const BLOQUE_INVISIBLE = Vector2i(0, 0)
 	
 	if timer.time_left > 0.0:
 		return
 	
 	timer.start(0.2)
 	
-	if atlas_coords == INTERROGACION:
+	if atlas_coords == INTERROGACION or atlas_coords == BLOQUE_INVISIBLE:
 		impacto_bloques_tween(tilemap, tile_pos, source_id, INTERROGACION, global_position, salto, sonido_coin)
 	elif atlas_coords == BLOQUE_LADRILLO:
 		impacto_bloques_tween(tilemap, tile_pos, source_id, BLOQUE_LADRILLO, global_position, salto, sonido_coin)
@@ -54,6 +55,7 @@ func impacto_bloques_tween(tilemap, tile_pos, source_id, TIPO_BLOQUE, global_pos
 		moneda_tween(item_pos, sonido_coin)
 	elif TIPO_BLOQUE == Vector2i(3, 1):
 		GlobalValues.bloqueSprite.get_child(0).frame = 14
+		item_ladrillos(item_pos, sonido_coin)
 	
 	GlobalValues.bloqueSprite.global_position = bloque_pos2
 	#GlobalValues.bloqueSprite.visible = true
@@ -82,7 +84,7 @@ func impacto_bloques_tween(tilemap, tile_pos, source_id, TIPO_BLOQUE, global_pos
 func moneda_tween(item_pos, sonido_coin):
 	print(item_pos, GlobalValues.lista_setas)
 	
-	if item_pos in GlobalValues.lista_setas:
+	if item_pos in GlobalValues.lista_setas or item_pos in GlobalValues.lista_setas_extra:
 		if not item_pos in GlobalValues.lista_desactivados:
 			GlobalValues.setaSprite.get_child(0).global_position = item_pos
 			GlobalValues.setaSprite.get_child(0).activa = true
@@ -106,3 +108,17 @@ func moneda_tween(item_pos, sonido_coin):
 
 func fin_moneda_ocultar():
 	GlobalValues.monedaSprite.global_position += Vector2(0, -500)
+
+# ESTRELLA, MONEDAS REPETITIVAS, etc.
+func item_ladrillos(item_pos, sonido_coin):
+	print(item_pos)
+	
+	if item_pos in GlobalValues.lista_estrellas:
+		if not item_pos in GlobalValues.lista_desactivados:
+			GlobalValues.estrellaSprite.global_position = item_pos
+			GlobalValues.estrellaSprite.activa = true
+			GlobalValues.lista_desactivados.append(item_pos)
+	
+	elif item_pos in GlobalValues.lista_repetitivas:
+		if not item_pos in GlobalValues.lista_desactivados:
+			moneda_tween(item_pos, sonido_coin)

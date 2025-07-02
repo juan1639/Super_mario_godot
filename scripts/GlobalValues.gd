@@ -14,6 +14,7 @@ var flag_sprite: Sprite2D = null
 var bloqueSprite: Node2D = null
 var monedaSprite: Sprite2D = null
 var setaSprite: Node2D = null
+var estrellaSprite: CharacterBody2D = null
 
 # ESTADOS DEL JUEGO
 var estado_juego = {
@@ -28,7 +29,19 @@ var estado_juego = {
 
 # ITEMS (SETAS, y SETAS-EXTRA):
 var lista_setas = [
-	Vector2(-1352, -72), Vector2(-664, -88), Vector2(-440, -72), Vector2(40, -136)
+	Vector2(-1352, -72), Vector2(-440, -72), Vector2(40, -136)
+]
+
+var lista_setas_extra = [
+	Vector2(-664, -88)
+]
+
+var lista_estrellas = [
+	Vector2(-72, -72)
+]
+
+var lista_repetitivas = [
+	Vector2(-184, -72)
 ]
 
 var lista_desactivados = []

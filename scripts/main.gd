@@ -7,6 +7,7 @@ extends Node2D
 @onready var bloquesSprites_scene = preload("res://scenes/bloques_sprites.tscn")
 @onready var moneda_scene = preload("res://scenes/moneda.tscn")
 @onready var seta_scene = preload("res://scenes/seta.tscn")
+@onready var estrella_scene = preload("res://scenes/estrella.tscn")
 
 # REFERENCIA A AREA2D (FallZone):
 @onready var fallZones = $Map_1_1/FallZones
@@ -41,6 +42,11 @@ func _ready():
 	GlobalValues.setaSprite = seta_scene.instantiate()
 	GlobalValues.setaSprite.global_position = Vector2(-1500, -500)
 	add_child(GlobalValues.setaSprite)
+	
+	# INSTANCIA DE UNA ESTRELLA (Posteriormente solo hace falta cambiar posicion):
+	GlobalValues.estrellaSprite = estrella_scene.instantiate()
+	GlobalValues.estrellaSprite.global_position = Vector2(-1550, -500)
+	add_child(GlobalValues.estrellaSprite)
 	
 	# INSTANCIAR GOOMBAS:
 	for spawn_point in goomba_spawns.get_children():

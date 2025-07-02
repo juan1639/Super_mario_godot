@@ -34,9 +34,11 @@ JugadorGlobal=""
 2d_physics/layer_2="Goomba"
 2d_physics/layer_3="Jugador"
 2d_physics/layer_4="EvitaCaerseGoomba"
-2d_physics/layer_5="BottomDeadZone"
-2d_physics/layer_6="GoalZone"
+2d_physics/layer_5="FallZone"
+2d_physics/layer_6="FlagPole"
+2d_physics/layer_7="GoalZone"
 2d_physics/layer_8="Seta"
+2d_physics/layer_10="Estrella"
 
 [rendering]
 
