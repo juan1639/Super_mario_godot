@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+var activo = 1
+
 # MOVIMIENTO HORIZONTAL:
 const VEL_X = 30
 var direccion = -1
@@ -15,13 +17,18 @@ var acel_gravedad = 0.0
 func _physics_process(delta):
 	aplicar_gravedad(delta)
 	
-	velocity.x = direccion * VEL_X
-	
+	velocity.x = direccion * VEL_X * activo
+		
 	move_and_slide()
 	animationPlayer.play("Walk")
 	
 	if is_on_wall():
 		direccion *= -1
+	
+	if GlobalValues.estado_juego["en_juego"]:
+		activo = 1
+	else:
+		activo = 0
 
 # APLICAR GRAVEDAD:
 func aplicar_gravedad(delta):

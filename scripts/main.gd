@@ -50,7 +50,7 @@ func _ready():
 		#print("Instanciando Goomba en ", spawn_point.global_position)
 		var goomba = goomba_scene.instantiate()
 		goomba.global_position = spawn_point.global_position
-		goomba.get_child(0).get_child(3).connect("body_entered", Callable(mario, "_on_goomba_body_entered"))
+		goomba.get_child(0).get_child(3).connect("body_entered", Callable(mario, "_on_goomba_body_entered").bind(goomba))
 		goomba.get_child(0).get_child(4).connect("body_entered", Callable(mario, "_on_aplastar_goomba_body_entered").bind(goomba))
 		add_child(goomba)
 	

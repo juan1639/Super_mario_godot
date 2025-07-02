@@ -170,7 +170,7 @@ func _on_goal_zone_body_entered(body):
 		visible = false
 		reset_estados_cambio_estado_a("transicion_fireworks")
 
-func _on_goomba_body_entered(body):
+func _on_goomba_body_entered(body, goomba):
 	if timerColision.time_left > 0:
 		return
 	
@@ -178,6 +178,7 @@ func _on_goomba_body_entered(body):
 		print("colision vs Goomba")
 		reset_estados_cambio_estado_a("transicion_vida_menos")
 		velocity = Vector2(0, POTENCIA_SALTO * 2)
+		goomba.get_child(0).activo = 0
 		GlobalValues.musicaFondo.stop()
 		sonido_lose_life.play()
 
