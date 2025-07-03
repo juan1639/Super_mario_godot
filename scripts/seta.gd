@@ -17,7 +17,7 @@ var acel_gravedad = 0.0
 # FUNCION EJECUTANDOSE A 60 FPS:
 func _physics_process(delta):
 	if activa:
-		aplicar_gravedad(delta)
+		FuncionesAuxiliares.aplicar_gravedad(delta, self)
 		velocity.x = direccion * VEL_X
 	
 	move_and_slide()
@@ -25,15 +25,6 @@ func _physics_process(delta):
 	
 	if is_on_wall():
 		direccion *= -1
-
-# APLICAR GRAVEDAD:
-func aplicar_gravedad(delta):
-	if not is_on_floor():
-		acel_gravedad += GlobalValues.GRAVEDAD * delta
-		velocity.y += acel_gravedad
-	else:
-		acel_gravedad = 0
-		velocity.y = 0
 
 # CHECK BOTTOM-LIMIT -> (activa=false):
 func check_bottom_limit_y_desactivar():

@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 GlobalValues="*res://scripts/GlobalValues.gd"
 MarioFuncionesAux="*res://scripts/MarioFuncionesAux.gd"
+FuncionesAuxiliares="*res://scripts/FuncionesAuxiliares.gd"
 
 [display]
 

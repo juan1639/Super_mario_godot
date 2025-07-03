@@ -17,9 +17,6 @@ var salto = {
 	"tiempo": 0.0
 }
 
-# WORLD LIMITS:
-const BOTTOM_LIMIT = 999 # BOTTOM-LIMIT (si es necesario)
-
 # RESPAWN-POSITION:
 const RESPAWN_POSITION = Vector2(-1578, -32)
 
@@ -55,7 +52,7 @@ func _physics_process(delta):
 		return
 	
 	if GlobalValues.estado_juego["transicion_goal_zone"] or GlobalValues.estado_juego["transicion_vida_menos"]:
-		aplicar_gravedad(delta)
+		FuncionesAuxiliares.aplicar_gravedad(delta, self)
 		move_and_slide()
 		update_animation()
 		aplicar_clamps()
@@ -71,7 +68,7 @@ func _physics_process(delta):
 		return
 	
 	if GlobalValues.estado_juego["transicion_next_vida"]:
-		aplicar_gravedad(delta)
+		FuncionesAuxiliares.aplicar_gravedad(delta, self)
 		move_and_slide()
 		update_animation()
 		
@@ -82,11 +79,11 @@ func _physics_process(delta):
 		return
 	
 	if not GlobalValues.estado_juego["en_juego"]:
-		aplicar_gravedad(delta)
+		FuncionesAuxiliares.aplicar_gravedad(delta, self)
 		move_and_slide()
 		return
 	
-	aplicar_gravedad(delta)
+	FuncionesAuxiliares.aplicar_gravedad(delta, self)
 	movimiento_horizontal(delta)
 	salto_jugador(delta)
 	aplicar_clamps()
@@ -95,16 +92,6 @@ func _physics_process(delta):
 	move_and_slide()
 	update_animation()
 	MarioFuncionesAux.identificar_tile(global_position, salto, timer, sonido_coin)
-
-# APLICAR GRAVEDAD:
-func aplicar_gravedad(delta):
-	if not is_on_floor():
-		acel_gravedad += GlobalValues.GRAVEDAD * delta
-		velocity.y += acel_gravedad
-	else:
-		acel_gravedad = 0
-		if not GlobalValues.estado_juego["transicion_vida_menos"]:
-			velocity.y = 0
 
 # APLICAR GRAVEDAD LEVE:
 func aplicar_gravedad_leve(delta):
@@ -248,5 +235,5 @@ func reset_estados_cambio_estado_a(estado):
 
 # CHECK WORLD-BOTTOM-LIMIT:
 func check_world_bottom_limit():
-	if global_position.y > BOTTOM_LIMIT:
+	if global_position.y > GlobalValues.BOTTOM_LIMIT:
 		reset_position()
