@@ -8,6 +8,7 @@
 size = Vector2(16, 16)
 
 [node name="Seta" type="Node2D"]
+z_index = 12
 
 [node name="Seta" type="CharacterBody2D" parent="."]
 collision_layer = 128

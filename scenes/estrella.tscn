@@ -92,6 +92,7 @@ _data = {
 }
 
 [node name="Estrella" type="CharacterBody2D"]
+z_index = 12
 script = ExtResource("1_w7u1q")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
