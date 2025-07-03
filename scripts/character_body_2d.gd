@@ -21,13 +21,15 @@ var salto = {
 const BOTTOM_LIMIT = 999 # BOTTOM-LIMIT (si es necesario)
 
 # RESPAWN-POSITION:
-const RESPAWN_POSITION = Vector2(-1578, -100)
+const RESPAWN_POSITION = Vector2(-1578, -32)
 
 # REFERENCIAS:
 @onready var sprite = $Sprite2D
 @onready var animationPlayer = $AnimationPlayer
+@onready var panelShowVidas = $CanvasLayer/Panel
 @onready var timer = $Timer
 @onready var timerColision = $TimerColision
+@onready var timerTransicionVidaMenos = $TimerTransicionVidaMenos
 @onready var sonido_salto = $SonidoSalto
 @onready var sonido_coin = $SonidoCoin
 @onready var sonido_lose_life = $SonidoLoseLife
@@ -41,6 +43,7 @@ func _ready():
 	sonido_salto.volume_db = -20.0
 	timer.start(0.2)
 	timerColision.start(0.1)
+	timerTransicionVidaMenos.start(3.1)
 
 # FUNCION EJECUTANDOSE A 60 FPS:
 func _physics_process(delta):
@@ -55,9 +58,19 @@ func _physics_process(delta):
 		aplicar_gravedad(delta)
 		move_and_slide()
 		update_animation()
+		if timerTransicionVidaMenos.time_left == 0.0 and GlobalValues.estado_juego["transicion_vida_menos"]:
+			reset_estados_cambio_estado_a("transicion_next_vida")
+			reset_position()
+			panelShowVidas.visible = true
 		return
 	
 	if GlobalValues.estado_juego["transicion_fireworks"]:
+		return
+	
+	if GlobalValues.estado_juego["transicion_next_vida"]:
+		aplicar_gravedad(delta)
+		move_and_slide()
+		update_animation()
 		return
 	
 	if not GlobalValues.estado_juego["en_juego"]:
@@ -177,6 +190,7 @@ func _on_goomba_body_entered(body, goomba):
 	if body == self and GlobalValues.estado_juego["en_juego"]:
 		print("colision vs Goomba")
 		reset_estados_cambio_estado_a("transicion_vida_menos")
+		timerTransicionVidaMenos.start(3.1)
 		velocity = Vector2(0, POTENCIA_SALTO * 2)
 		goomba.get_child(0).activo = 0
 		GlobalValues.musicaFondo.stop()

@@ -25,6 +25,7 @@ var estado_juego = {
 	"transicion_flag_pole": false,
 	"transicion_goal_zone": false,
 	"transicion_vida_menos": false,
+	"transicion_next_vida": false,
 	"transicion_fireworks": false,
 	"game_over": false
 }
