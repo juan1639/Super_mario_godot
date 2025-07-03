@@ -58,7 +58,9 @@ func _physics_process(delta):
 		aplicar_gravedad(delta)
 		move_and_slide()
 		update_animation()
+		
 		if timerTransicionVidaMenos.time_left == 0.0 and GlobalValues.estado_juego["transicion_vida_menos"]:
+			timerTransicionVidaMenos.start(2.1)
 			reset_estados_cambio_estado_a("transicion_next_vida")
 			reset_position()
 			panelShowVidas.visible = true
@@ -71,6 +73,11 @@ func _physics_process(delta):
 		aplicar_gravedad(delta)
 		move_and_slide()
 		update_animation()
+		
+		if timerTransicionVidaMenos.time_left == 0.0:
+			reset_estados_cambio_estado_a("en_juego")
+			panelShowVidas.visible = false
+			GlobalValues.musicaFondo.play()
 		return
 	
 	if not GlobalValues.estado_juego["en_juego"]:
