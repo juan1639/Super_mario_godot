@@ -58,6 +58,7 @@ func _physics_process(delta):
 		aplicar_gravedad(delta)
 		move_and_slide()
 		update_animation()
+		aplicar_clamps()
 		
 		if timerTransicionVidaMenos.time_left == 0.0 and GlobalValues.estado_juego["transicion_vida_menos"]:
 			timerTransicionVidaMenos.start(2.1)
@@ -145,7 +146,7 @@ func salto_jugador(delta):
 # WORLD CLAMPS:
 func aplicar_clamps():
 	# CLAMP Velocity.y:
-	velocity.y = clamp(velocity.y, -1000, 1000)
+	velocity.y = clamp(velocity.y, -700, 700)
 	
 	# CHECK WORLD-LIMITS-HOR:
 	global_position.x = clamp(global_position.x, GlobalValues.LIMITE_IZ + 30, GlobalValues.LIMITE_DE - 20)
@@ -169,9 +170,10 @@ func update_animation():
 
 # SEÑALES:
 func _on_fall_zone_body_entered(body):
-	if body == self:
-		reset_position()
+	if body == self and GlobalValues.estado_juego["en_juego"]:
+		actions_lose_life()
 
+# BAJADA DE BANDERA:
 func _on_flag_pole_body_entered(body):
 	if body == self:
 		velocity = Vector2.ZERO
@@ -183,6 +185,7 @@ func _on_flag_pole_body_entered(body):
 		var bottom_pos = GlobalValues.flag_sprite.global_position + Vector2(0, 128) # 128 = posY bandera suelo
 		tween.tween_property(GlobalValues.flag_sprite, "global_position", bottom_pos, 2.1)
 
+# DESAPARECER POR LA PUERTA DEL CASITLLO:
 func _on_goal_zone_body_entered(body):
 	if body == self:
 		print("goal")
@@ -190,26 +193,35 @@ func _on_goal_zone_body_entered(body):
 		visible = false
 		reset_estados_cambio_estado_a("transicion_fireworks")
 
+# COLISION VS GOOMBA (LOSE LIFE):
 func _on_goomba_body_entered(body, goomba):
 	if timerColision.time_left > 0:
 		return
 	
 	if body == self and GlobalValues.estado_juego["en_juego"]:
-		print("colision vs Goomba")
-		reset_estados_cambio_estado_a("transicion_vida_menos")
-		timerTransicionVidaMenos.start(3.1)
 		velocity = Vector2(0, POTENCIA_SALTO * 2)
 		goomba.get_child(0).activo = 0
-		GlobalValues.musicaFondo.stop()
-		sonido_lose_life.play()
+		actions_lose_life()
 
+# COLISION VS GOOMBA (APLASTAR-GOOMBA):
 func _on_aplastar_goomba_body_entered(body, goomba):
 	if body == self and GlobalValues.estado_juego["en_juego"]:
-		print("Aplasta-Goomba")
 		timerColision.start(0.1)
 		goomba.queue_free()
 		velocity = Vector2(velocity.x, POTENCIA_SALTO * 2.8)
 		sonido_aplastar.play()
+
+# ACCIONES AL PERDER VIDA:
+func actions_lose_life():
+	reset_estados_cambio_estado_a("transicion_vida_menos")
+	GlobalValues.marcadores["lives"] -= 1
+	var newText = "x " + str(GlobalValues.marcadores["lives"])
+	panelShowVidas.get_child(1).text = newText
+	
+	timerTransicionVidaMenos.start(3.1)
+	
+	GlobalValues.musicaFondo.stop()
+	sonido_lose_life.play()
 
 # CHECK START-GO-GOAL-ZONE:
 func check_start_go_goal_zone():
@@ -225,7 +237,8 @@ func check_start_go_goal_zone():
 func reset_position():
 	global_position = RESPAWN_POSITION
 	velocity = Vector2.ZERO
-	
+	sprite.flip_h = false
+
 # RESETEAR-ESTADOS Y CAMBIAR UN ESTADO:
 func reset_estados_cambio_estado_a(estado):
 	for keyName in GlobalValues.estado_juego.keys():
