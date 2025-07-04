@@ -3,6 +3,8 @@ extends Node
 signal marcador_actualizado
 signal monedas_actualizadas
 
+@onready var show_bonus_scene = preload("res://scenes/show_bonus.tscn")
+
 # IDENTIFICAR TILE (EN LA POSICION DE MARIO):
 func identificar_tile(global_position, salto, timer, sonido_coin):
 	var tilemap = GlobalValues.ref_tilemap
@@ -55,10 +57,10 @@ func impacto_bloques_tween(tilemap, tile_pos, source_id, TIPO_BLOQUE, global_pos
 	
 	if TIPO_BLOQUE == Vector2i(2, 1):
 		GlobalValues.bloqueSprite.get_child(0).frame = 13
-		moneda_tween(item_pos, sonido_coin)
+		moneda_tween(item_pos, sonido_coin, global_position)
 	elif TIPO_BLOQUE == Vector2i(3, 1):
 		GlobalValues.bloqueSprite.get_child(0).frame = 14
-		item_ladrillos(item_pos, sonido_coin)
+		item_ladrillos(item_pos, sonido_coin, global_position)
 	
 	GlobalValues.bloqueSprite.global_position = bloque_pos2
 	#GlobalValues.bloqueSprite.visible = true
@@ -84,7 +86,7 @@ func impacto_bloques_tween(tilemap, tile_pos, source_id, TIPO_BLOQUE, global_pos
 	#get_tree().current_scene.add_child(moneda)
 
 # CREAR TWEEN MONEDA ROTANDO HACIA ARRIBA:
-func moneda_tween(item_pos, sonido_coin):
+func moneda_tween(item_pos, sonido_coin, global_position):
 	print(item_pos, GlobalValues.lista_setas)
 	
 	if item_pos in GlobalValues.lista_setas or item_pos in GlobalValues.lista_setas_extra:
@@ -96,7 +98,7 @@ func moneda_tween(item_pos, sonido_coin):
 	
 	elif not item_pos in GlobalValues.lista_desactivados:
 		sonido_coin.play()
-		agregar_puntos(200)
+		agregar_puntos(200, global_position)
 		agregar_monedas(1)
 		GlobalValues.monedaSprite.global_position = item_pos
 		GlobalValues.lista_desactivados.append(item_pos)
@@ -116,7 +118,7 @@ func fin_moneda_ocultar():
 	GlobalValues.monedaSprite.global_position += Vector2(0, -500)
 
 # ESTRELLA, MONEDAS REPETITIVAS, etc.
-func item_ladrillos(item_pos, sonido_coin):
+func item_ladrillos(item_pos, sonido_coin, global_position):
 	print(item_pos)
 	
 	if item_pos in GlobalValues.lista_estrellas:
@@ -128,12 +130,15 @@ func item_ladrillos(item_pos, sonido_coin):
 	
 	elif item_pos in GlobalValues.lista_repetitivas:
 		if not item_pos in GlobalValues.lista_desactivados:
-			moneda_tween(item_pos, sonido_coin)
+			moneda_tween(item_pos, sonido_coin, global_position)
 
 # SCORES:
-func agregar_puntos(cantidad):
+func agregar_puntos(cantidad, global_position):
 	GlobalValues.marcadores["score"] += cantidad
 	emit_signal("marcador_actualizado")
+	var showBonus = show_bonus_scene.instantiate()
+	showBonus.global_position = global_position
+	add_child(showBonus)
 
 func agregar_monedas(cantidad):
 	GlobalValues.marcadores["coins"] += cantidad

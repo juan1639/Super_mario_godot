@@ -15,6 +15,9 @@ func _ready():
 		MarioFuncionesAux.connect("monedas_actualizadas", Callable(self, "_actualizar_monedas"))
 	
 	GlobalValues.marcadores["score"] = 0
+	
+	#for obj in self.get_children():
+		#obj.scale = Vector2(1.5, 1.5)
 
 func _process(delta):
 	tiempo.text = str(int(GlobalValues.marcadores["time"]))
