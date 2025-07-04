@@ -138,6 +138,7 @@ func agregar_puntos(cantidad, global_position):
 	emit_signal("marcador_actualizado")
 	var showBonus = show_bonus_scene.instantiate()
 	showBonus.global_position = global_position
+	showBonus.frame_ssheet = showBonus.choose_bonus[str(cantidad)]
 	add_child(showBonus)
 
 func agregar_monedas(cantidad):
