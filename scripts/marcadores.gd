@@ -12,8 +12,15 @@ func _ready():
 	if MarioFuncionesAux.has_signal("marcador_actualizado"):
 		print("hecho")
 		MarioFuncionesAux.connect("marcador_actualizado", Callable(self, "_actualizar_score"))
+		MarioFuncionesAux.connect("monedas_actualizadas", Callable(self, "_actualizar_monedas"))
 	
 	GlobalValues.marcadores["score"] = 0
 
+func _process(delta):
+	tiempo.text = str(int(GlobalValues.marcadores["time"]))
+
 func _actualizar_score():
 	score.text = str(GlobalValues.marcadores["score"])
+
+func _actualizar_monedas():
+	monedas.text = "x " + str(GlobalValues.marcadores["coins"])

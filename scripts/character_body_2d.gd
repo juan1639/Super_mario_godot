@@ -38,6 +38,7 @@ func _ready():
 	reset_estados_cambio_estado_a("en_juego")
 	reset_position()
 	sonido_salto.volume_db = -20.0
+	GlobalValues.marcadores["time"] = GlobalValues.TIEMPO_INICIAL
 	timer.start(0.2)
 	timerColision.start(0.1)
 	timerTransicionVidaMenos.start(3.1)
@@ -88,10 +89,17 @@ func _physics_process(delta):
 	salto_jugador(delta)
 	aplicar_clamps()
 	check_world_bottom_limit()
-	
 	move_and_slide()
 	update_animation()
 	MarioFuncionesAux.identificar_tile(global_position, salto, timer, sonido_coin)
+	check_timeup(delta)
+
+# CHECK TIMEUP:
+func check_timeup(delta):
+	GlobalValues.marcadores["time"] -= delta
+	if GlobalValues.marcadores["time"] <= 0:
+		GlobalValues.marcadores["time"] = 0.0
+		print("Time up")
 
 # APLICAR GRAVEDAD LEVE:
 func aplicar_gravedad_leve(delta):

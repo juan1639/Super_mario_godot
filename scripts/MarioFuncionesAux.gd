@@ -1,6 +1,7 @@
 extends Node
 
 signal marcador_actualizado
+signal monedas_actualizadas
 
 # IDENTIFICAR TILE (EN LA POSICION DE MARIO):
 func identificar_tile(global_position, salto, timer, sonido_coin):
@@ -96,6 +97,7 @@ func moneda_tween(item_pos, sonido_coin):
 	elif not item_pos in GlobalValues.lista_desactivados:
 		sonido_coin.play()
 		agregar_puntos(200)
+		agregar_monedas(1)
 		GlobalValues.monedaSprite.global_position = item_pos
 		GlobalValues.lista_desactivados.append(item_pos)
 		
@@ -132,3 +134,7 @@ func item_ladrillos(item_pos, sonido_coin):
 func agregar_puntos(cantidad):
 	GlobalValues.marcadores["score"] += cantidad
 	emit_signal("marcador_actualizado")
+
+func agregar_monedas(cantidad):
+	GlobalValues.marcadores["coins"] += cantidad
+	emit_signal("monedas_actualizadas")

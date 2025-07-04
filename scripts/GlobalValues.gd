@@ -19,11 +19,13 @@ var estrellaSprite: CharacterBody2D = null
 var musicaFondo: AudioStreamPlayer2D = null
 
 # MARCADORES:
+const TIEMPO_INICIAL = 90
+
 var marcadores = {
 	"score": 0,
 	"coins": 0,
 	"world": [1, 1],
-	"time:": 300,
+	"time:": TIEMPO_INICIAL,
 	"lives": 4
 }
 
