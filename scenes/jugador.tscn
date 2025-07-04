@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://4hcgtj15ld1m"]
+[gd_scene load_steps=17 format=3 uid="uid://4hcgtj15ld1m"]
 
 [ext_resource type="Script" uid="uid://dq1nn6saist38" path="res://scripts/character_body_2d.gd" id="1_lhlt4"]
 [ext_resource type="Texture2D" uid="uid://bp22hb60foxl4" path="res://textures/mario-ssheet-1.png" id="2_28edd"]
@@ -263,6 +263,13 @@ _data = {
 &"Walk": SubResource("Animation_1xt23")
 }
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xm55e"]
+bg_color = Color(0, 0.0196078, 0.196078, 0.894118)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
 [node name="Jugador" type="Node2D"]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["Jugador", "JugadorGlobal"]]
@@ -312,6 +319,7 @@ offset_left = -1580.0
 offset_top = -150.0
 offset_right = -1380.0
 offset_bottom = -50.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_xm55e")
 
 [node name="Label_world" type="Label" parent="CharacterBody2D/CanvasLayer/Panel"]
 layout_mode = 0

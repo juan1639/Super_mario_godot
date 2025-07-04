@@ -196,6 +196,7 @@ func _on_aplastar_goomba_body_entered(body, goomba):
 		timerColision.start(0.1)
 		goomba.queue_free()
 		velocity = Vector2(velocity.x, POTENCIA_SALTO * 2.8)
+		MarioFuncionesAux.agregar_puntos(100)
 		sonido_aplastar.play()
 
 # ACCIONES AL PERDER VIDA:

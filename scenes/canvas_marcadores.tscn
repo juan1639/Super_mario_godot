@@ -1,0 +1,84 @@
+[gd_scene load_steps=4 format=3 uid="uid://ddnv610wjxhhp"]
+
+[ext_resource type="Script" uid="uid://hkr84hyg7jrb" path="res://scripts/marcadores.gd" id="1_k8v57"]
+[ext_resource type="Texture2D" uid="uid://bcfgbbponteaq" path="res://textures/coins-ssheet-alpha.png" id="2_igp5a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_igp5a"]
+bg_color = Color(0.133333, 0.247059, 0.945098, 0.509804)
+
+[node name="CanvasMarcadores" type="CanvasLayer"]
+
+[node name="Panel" type="Panel" parent="."]
+offset_right = 1152.0
+offset_bottom = 62.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_igp5a")
+script = ExtResource("1_k8v57")
+
+[node name="ScoreText" type="Label" parent="Panel"]
+layout_mode = 0
+offset_right = 81.0
+offset_bottom = 28.0
+text = "Score"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WorldText" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 743.0
+offset_top = 1.0
+offset_right = 802.0
+offset_bottom = 29.0
+text = "World"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TimeText" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 1082.0
+offset_top = 1.0
+offset_right = 1138.0
+offset_bottom = 28.0
+text = "Time"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreNum" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 30.0
+offset_right = 78.0
+offset_bottom = 60.0
+text = "0"
+horizontal_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="Panel"]
+position = Vector2(355, 35)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("2_igp5a")
+hframes = 6
+
+[node name="MonedasNum" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 376.0
+offset_top = 26.0
+offset_right = 436.0
+offset_bottom = 53.0
+text = "x 0"
+
+[node name="WorldNum" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 750.0
+offset_top = 31.0
+offset_right = 800.0
+offset_bottom = 59.0
+text = "1 - 1"
+horizontal_alignment = 1
+
+[node name="TimeNum" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 1083.0
+offset_top = 31.0
+offset_right = 1143.0
+offset_bottom = 59.0
+text = "0"
+horizontal_alignment = 1
