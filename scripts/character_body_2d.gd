@@ -29,6 +29,7 @@ const CHECK_POINT_MIDDLE = Vector2(-100, -32)
 @onready var timer = $Timer
 @onready var timerColision = $TimerColision
 @onready var timerTransicionVidaMenos = $TimerTransicionVidaMenos
+@onready var timerGoombaAplastado = $TimerGoombaAplastado
 @onready var sonido_salto = $SonidoSalto
 @onready var sonido_coin = $SonidoCoin
 @onready var sonido_lose_life = $SonidoLoseLife
@@ -195,16 +196,18 @@ func _on_goomba_body_entered(body, goomba):
 	if timerColision.time_left > 0:
 		return
 	
-	if body == self and GlobalValues.estado_juego["en_juego"]:
+	if body == self and GlobalValues.estado_juego["en_juego"] and not goomba.get_child(0).aplastado:
 		velocity = Vector2(0, POTENCIA_SALTO * 2)
 		goomba.get_child(0).activo = 0
 		actions_lose_life()
 
 # COLISION VS GOOMBA (APLASTAR-GOOMBA):
 func _on_aplastar_goomba_body_entered(body, goomba):
-	if body == self and GlobalValues.estado_juego["en_juego"]:
+	if body == self and GlobalValues.estado_juego["en_juego"] and not goomba.get_child(0).aplastado:
 		timerColision.start(0.1)
-		goomba.queue_free()
+		goomba.get_child(0).aplastado = true
+		goomba.get_child(0).velocity.x = 0
+		#goomba.queue_free()
 		velocity = Vector2(velocity.x, POTENCIA_SALTO * 2.8)
 		MarioFuncionesAux.agregar_puntos(100, global_position)
 		sonido_aplastar.play()

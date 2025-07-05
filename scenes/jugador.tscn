@@ -310,6 +310,9 @@ one_shot = true
 [node name="TimerTransicionVidaMenos" type="Timer" parent="CharacterBody2D"]
 one_shot = true
 
+[node name="TimerGoombaAplastado" type="Timer" parent="CharacterBody2D"]
+one_shot = true
+
 [node name="CanvasLayer" type="CanvasLayer" parent="CharacterBody2D"]
 follow_viewport_enabled = true
 

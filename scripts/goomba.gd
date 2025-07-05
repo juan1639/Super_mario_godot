@@ -3,6 +3,7 @@ extends CharacterBody2D
 # ACTIVO Y POSICION-INICIAL:
 var activo = 0
 var respawn_pos = 0.0
+var aplastado = false
 
 # MOVIMIENTO HORIZONTAL:
 const VEL_X = 30
@@ -25,7 +26,10 @@ func _ready():
 # FUNCION EJECUTANDOSE A 60 FPS:
 func _physics_process(delta):
 	FuncionesAuxiliares.aplicar_gravedad(delta, self)
-	velocity.x = direccion * VEL_X * activo
+	
+	if not aplastado:
+		velocity.x = direccion * VEL_X * activo
+	
 	move_and_slide()
 	update_animation()
 	
@@ -35,7 +39,7 @@ func _physics_process(delta):
 	if not GlobalValues.estado_juego["en_juego"]:
 		activo = 0
 	
-	if activo != 1:
+	if activo != 1 and not aplastado:
 		if abs(global_position.x - GlobalValues.marioRG.global_position.x) < DISTANCIA_ACTIVACION and GlobalValues.estado_juego["en_juego"]:
 			activo = 1
 	
@@ -46,6 +50,8 @@ func _physics_process(delta):
 func update_animation():
 	if not GlobalValues.estado_juego["en_juego"]:
 		animationPlayer.play("RESET")
+	elif aplastado:
+		animationPlayer.play("Aplastado")
 	elif activo != 0:
 		animationPlayer.play("Walk")
 	else:
