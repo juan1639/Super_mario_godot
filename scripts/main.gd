@@ -21,6 +21,9 @@ extends Node2D
 
 # FUNCION INICIALIZADORA:
 func _ready():
+	# REFERENCIAR A MARIO EN GLOBAL-VALUES:
+	GlobalValues.marioRG = mario
+	
 	# REFERENCIAS A LA BANDERA Y AL TILEMAP:
 	GlobalValues.flag_sprite = $Map_1_1/FlagSprite
 	GlobalValues.ref_tilemap = $Map_1_1/TileMapLayer

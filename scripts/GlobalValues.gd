@@ -16,6 +16,10 @@ var monedaSprite: Sprite2D = null
 var setaSprite: Node2D = null
 var estrellaSprite: CharacterBody2D = null
 
+# REFERENCIA GLOBAL A MARIO:
+var marioRG: CharacterBody2D = null
+
+# MUSICA FONDO:
 var musicaFondo: AudioStreamPlayer2D = null
 
 # MARCADORES:

@@ -264,11 +264,12 @@ _data = {
 }
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xm55e"]
-bg_color = Color(0, 0.0196078, 0.196078, 0.894118)
+bg_color = Color(0, 0.0196078, 0.0784314, 0.894118)
 corner_radius_top_left = 6
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
+anti_aliasing = false
 
 [node name="Jugador" type="Node2D"]
 

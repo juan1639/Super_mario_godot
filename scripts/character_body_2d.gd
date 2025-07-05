@@ -19,6 +19,8 @@ var salto = {
 
 # RESPAWN-POSITION:
 const RESPAWN_POSITION = Vector2(-1578, -32)
+const RESPAWN_MIDDLE_WORLD = Vector2(0, -32)
+const CHECK_POINT_MIDDLE = Vector2(-100, -32)
 
 # REFERENCIAS:
 @onready var sprite = $Sprite2D
@@ -35,8 +37,8 @@ const RESPAWN_POSITION = Vector2(-1578, -32)
 
 # FUNCION INICIALIZADORA:
 func _ready():
-	reset_estados_cambio_estado_a("en_juego")
 	reset_position()
+	reset_estados_cambio_estado_a("en_juego")
 	sonido_salto.volume_db = -20.0
 	GlobalValues.marcadores["time"] = GlobalValues.TIEMPO_INICIAL
 	timer.start(0.2)
@@ -231,7 +233,12 @@ func check_start_go_goal_zone():
 
 # RESETEAR-RESPAWNEAR JUGADOR A SU POSICION INICIAL:
 func reset_position():
-	global_position = RESPAWN_POSITION
+	print(global_position)
+	if global_position.x < CHECK_POINT_MIDDLE.x or GlobalValues.estado_juego["prejuego"]:
+		global_position = RESPAWN_POSITION
+	else:
+		global_position = RESPAWN_MIDDLE_WORLD
+	
 	velocity = Vector2.ZERO
 	sprite.flip_h = false
 
