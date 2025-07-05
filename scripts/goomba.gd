@@ -18,10 +18,14 @@ const DISTANCIA_ACTIVACION = 200
 # REFERENCIAS:
 @onready var sprite = $Sprite2D
 @onready var animationPlayer = $AnimationPlayer
+@onready var timerGoombaAplastado = $TimerGoombaAplastado
 
 # FUNCION INIT:
 func _ready():
 	respawn_pos = global_position
+	activo = 0
+	aplastado = false
+	timerGoombaAplastado.connect("timeout", _on_timer_timeout_aplastado)
 
 # FUNCION EJECUTANDOSE A 60 FPS:
 func _physics_process(delta):
@@ -45,6 +49,10 @@ func _physics_process(delta):
 	
 	if GlobalValues.estado_juego["transicion_next_vida"]:
 		global_position = respawn_pos
+
+# SEÑAL GOOMBA-APLASTADO:
+func _on_timer_timeout_aplastado():
+	queue_free()
 
 # UPDATE ANIMATION:
 func update_animation():
