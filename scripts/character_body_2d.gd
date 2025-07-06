@@ -17,6 +17,9 @@ var salto = {
 	"tiempo": 0.0
 }
 
+# BONUS BANDERA:
+var altura_alcanzada = Vector2.ZERO
+
 # RESPAWN-POSITION:
 const RESPAWN_POSITION = Vector2(-1578, -32)
 const RESPAWN_MIDDLE_WORLD = Vector2(0, -32)
@@ -173,6 +176,9 @@ func _on_fall_zone_body_entered(body):
 # BAJADA DE BANDERA:
 func _on_flag_pole_body_entered(body):
 	if body == self:
+		print("bonus-bandera:", global_position)
+		altura_alcanzada = global_position
+		MarioFuncionesAux.agregar_puntos(select_bonus_bandera(), altura_alcanzada)
 		velocity = Vector2.ZERO
 		salto["presionado"] = false
 		reset_estados_cambio_estado_a("transicion_flag_pole")
@@ -233,6 +239,16 @@ func check_start_go_goal_zone():
 	#var tween = create_tween()
 	#tween.tween_property(self, "global_position", Vector2(-1500, -80), 1.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
+# SELECT BONUS BANDERA (En funcion de la altura alcanzada):
+func select_bonus_bandera():
+	if altura_alcanzada.y < -135.0:
+		return 5000
+	elif altura_alcanzada.y < -100.0:
+		return 2000
+	elif altura_alcanzada.y < -75.0:
+		return 800
+	return 400
+ 
 # RESETEAR-RESPAWNEAR JUGADOR A SU POSICION INICIAL:
 func reset_position():
 	print(global_position)

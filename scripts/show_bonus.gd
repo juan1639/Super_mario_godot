@@ -6,7 +6,7 @@ var choose_bonus = {
 }
 
 var frame_ssheet = 0
-const vel_y = 45
+var vel_y = 12
 const direccion = -1
 
 @onready var timer = $Timer
@@ -14,7 +14,8 @@ const direccion = -1
 # FUNCION INIT:
 func _ready():
 	frame = frame_ssheet
-	global_position += Vector2(0, -48)
+	vel_y = 2 if frame == 2 else vel_y
+	global_position += Vector2(16, -48) if frame != 2 else Vector2(24, 24)
 	timer.start(1.0)
 
 # FUNCION A 60 FPS:
