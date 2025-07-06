@@ -55,6 +55,10 @@ func impacto_bloques_tween(tilemap, tile_pos, source_id, TIPO_BLOQUE, global_pos
 	var bloque_pos2 = tilemap.map_to_local(bloque_pos) + tilemap.position
 	var item_pos = bloque_pos2 + Vector2(0, -16)
 	
+	# ASEGURAR QUE EL TILE SE PONGA OPACO (DESPUES SE TRANSPARENTARA):
+	GlobalValues.bloqueSprite.modulate = Color(1, 1, 1, 1)
+	
+	# QUE TIPO DE BLOQUE? (INTERROGACION O LADRILLO):
 	if TIPO_BLOQUE == Vector2i(2, 1):
 		GlobalValues.bloqueSprite.get_child(0).frame = 13
 		moneda_tween(item_pos, sonido_coin, global_position)
@@ -78,6 +82,13 @@ func impacto_bloques_tween(tilemap, tile_pos, source_id, TIPO_BLOQUE, global_pos
 	
 	# VOLVER A COLOCAR EL TILE:
 	tween.tween_callback(Callable(self, "restore_block").bind(tilemap, tile_pos, source_id, TIPO_BLOQUE))
+	
+	# DESAPARECER (TRANSPARENTAR) EL 'TILE-SPRITE' TEMPORAL:
+	tween.tween_property(GlobalValues.bloqueSprite, "modulate", Color(0, 0, 0, 0), 0.1).set_ease(Tween.EASE_IN)
+	
+	# COLOCAR EL TILE-DESACTIVADO:
+	if TIPO_BLOQUE == Vector2i(2, 1):
+		tween.tween_callback(Callable(self, "restore_block").bind(tilemap, tile_pos, source_id, Vector2i(7, 3)))
 
 #func reemplazar_tile():
 	#tilemap.set_cell(0, tile_pos, new_tile_id) # Cambia el tile

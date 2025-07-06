@@ -3,6 +3,7 @@ extends CharacterBody2D
 # ACTIVO Y POSICION-INICIAL:
 var activo = 0
 var respawn_pos = 0.0
+var respawneado_bool = false
 var aplastado = false
 
 # MOVIMIENTO HORIZONTAL:
@@ -36,6 +37,7 @@ func _physics_process(delta):
 	
 	move_and_slide()
 	update_animation()
+	respawn_goomba_transicion_next_vida()
 	
 	if is_on_wall():
 		direccion *= -1
@@ -46,13 +48,19 @@ func _physics_process(delta):
 	if activo != 1 and not aplastado:
 		if abs(global_position.x - GlobalValues.marioRG.global_position.x) < DISTANCIA_ACTIVACION and GlobalValues.estado_juego["en_juego"]:
 			activo = 1
-	
-	if GlobalValues.estado_juego["transicion_next_vida"]:
-		global_position = respawn_pos
 
 # SEÑAL GOOMBA-APLASTADO:
 func _on_timer_timeout_aplastado():
 	queue_free()
+
+# RESPAWNEAR A GOOMBA TRAS IMPACTO CON MARIO (vida menos):
+func respawn_goomba_transicion_next_vida():
+	if GlobalValues.estado_juego["transicion_next_vida"] and not respawneado_bool:
+		respawneado_bool = true
+		global_position = respawn_pos
+	
+	if GlobalValues.estado_juego["en_juego"] and respawneado_bool:
+		respawneado_bool = false
 
 # UPDATE ANIMATION:
 func update_animation():

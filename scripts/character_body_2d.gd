@@ -271,3 +271,8 @@ func reset_estados_cambio_estado_a(estado):
 func check_world_bottom_limit():
 	if global_position.y > GlobalValues.BOTTOM_LIMIT:
 		reset_position()
+
+# Pulsar ESC (salir):
+func _input(event):
+	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
+		get_tree().quit()
