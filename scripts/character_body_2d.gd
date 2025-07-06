@@ -36,6 +36,7 @@ const PUNTOS_POR_SEGUNDO := 50
 # REFERENCIAS:
 @onready var sprite = $Sprite2D
 @onready var animationPlayer = $AnimationPlayer
+@onready var cpuParticles = $CPUParticles2D
 @onready var panelShowVidas = $CanvasLayer/Panel
 @onready var panelShowVidasMiddle = $CanvasLayer/PanelMiddleWorld
 @onready var timer = $Timer
@@ -151,6 +152,8 @@ func salto_jugador(delta):
 		# SALTO BASE + impulso adicional
 		var impulso_extra = abs(velocity.x) * 0.45
 		velocity.y = POTENCIA_SALTO - impulso_extra
+		cpuParticles.emitting = true
+		cpuParticles.global_position = global_position + Vector2(0, 16)
 	
 	if salto["presionado"]:
 		salto["tiempo"] += delta
