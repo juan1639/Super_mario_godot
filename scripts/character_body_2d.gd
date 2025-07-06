@@ -29,6 +29,7 @@ const CHECK_POINT_MIDDLE = Vector2(-100, -32)
 @onready var sprite = $Sprite2D
 @onready var animationPlayer = $AnimationPlayer
 @onready var panelShowVidas = $CanvasLayer/Panel
+@onready var panelShowVidasMiddle = $CanvasLayer/PanelMiddleWorld
 @onready var timer = $Timer
 @onready var timerColision = $TimerColision
 @onready var timerTransicionVidaMenos = $TimerTransicionVidaMenos
@@ -68,6 +69,7 @@ func _physics_process(delta):
 			reset_estados_cambio_estado_a("transicion_next_vida")
 			reset_position()
 			panelShowVidas.visible = true
+			panelShowVidasMiddle.visible = true
 		return
 	
 	if GlobalValues.estado_juego["transicion_fireworks"]:
@@ -81,6 +83,7 @@ func _physics_process(delta):
 		if timerTransicionVidaMenos.time_left == 0.0:
 			reset_estados_cambio_estado_a("en_juego")
 			panelShowVidas.visible = false
+			panelShowVidasMiddle.visible = false
 			GlobalValues.musicaFondo.play()
 		return
 	
@@ -223,6 +226,7 @@ func actions_lose_life():
 	GlobalValues.marcadores["lives"] -= 1
 	var newText = "x " + str(GlobalValues.marcadores["lives"])
 	panelShowVidas.get_child(1).text = newText
+	panelShowVidasMiddle.get_child(1).text = newText
 	
 	timerTransicionVidaMenos.start(3.1)
 	
