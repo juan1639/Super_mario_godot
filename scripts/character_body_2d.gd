@@ -222,13 +222,16 @@ func _on_goomba_body_entered(body, goomba):
 	if timerColision.time_left > 0:
 		return
 	
-	if invulnerability:
-		return
-	
 	if body == self and GlobalValues.estado_juego["en_juego"] and not goomba.get_child(0).aplastado:
-		velocity = Vector2(0, POTENCIA_SALTO * 2)
-		goomba.get_child(0).activo = 0
-		actions_lose_life()
+		if invulnerability and not goomba.get_child(0).is_dying_not_aplastado:
+			goomba.get_child(0).is_dying_not_aplastado = true
+			goomba.get_child(0).timerGoombaAplastado.start(0.4)
+			goomba.get_child(0).velocity.y = -200
+			return
+		elif not invulnerability:
+			velocity = Vector2(0, POTENCIA_SALTO * 2)
+			goomba.get_child(0).activo = 0
+			actions_lose_life()
 
 # COLISION VS GOOMBA (APLASTAR-GOOMBA):
 func _on_aplastar_goomba_body_entered(body, goomba):
@@ -279,6 +282,7 @@ func select_bonus_bandera():
 		return 800
 	return 400
  
+# CHECK TIMEOUT ESTRELLA:
 func _on_timer_timeout_estrella():
 	print("Timeup invulnerabilidad")
 	invulnerability = false

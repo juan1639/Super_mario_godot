@@ -93,6 +93,9 @@ tracks/2/keys = {
 "values": [0]
 }
 
+[sub_resource type="Animation" id="Animation_xm55e"]
+resource_name = "Intermitente"
+
 [sub_resource type="Animation" id="Animation_xtmxp"]
 resource_name = "Jump"
 length = 0.4
@@ -254,9 +257,6 @@ tracks/2/keys = {
 "values": [1, 2, 3]
 }
 
-[sub_resource type="Animation" id="Animation_xm55e"]
-resource_name = "Intermitente"
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3djcq"]
 _data = {
 &"FlagPole": SubResource("Animation_lhlt4"),
@@ -316,6 +316,7 @@ one_shot = true
 one_shot = true
 
 [node name="TimerEstrella" type="Timer" parent="CharacterBody2D"]
+one_shot = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="CharacterBody2D"]
 follow_viewport_enabled = true

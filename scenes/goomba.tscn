@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b2jpccyukjvaa"]
+[gd_scene load_steps=11 format=3 uid="uid://b2jpccyukjvaa"]
 
 [ext_resource type="Texture2D" uid="uid://brof5063rh8o6" path="res://textures/goomba-ssheet-alpha.png" id="1_21hcc"]
 [ext_resource type="Script" uid="uid://q12qkrusnvc8" path="res://scripts/goomba.gd" id="1_s1jgw"]
@@ -126,9 +126,50 @@ tracks/2/keys = {
 "values": [0, 1]
 }
 
+[sub_resource type="Animation" id="Animation_l0j8n"]
+resource_name = "IsDyingNotAplastado"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_21hcc")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fgpj4"]
 _data = {
 &"Aplastado": SubResource("Animation_fgpj4"),
+&"IsDyingNotAplastado": SubResource("Animation_l0j8n"),
 &"RESET": SubResource("Animation_21hcc"),
 &"Walk": SubResource("Animation_s1jgw")
 }

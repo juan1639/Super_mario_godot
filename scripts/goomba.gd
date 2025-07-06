@@ -5,10 +5,13 @@ var activo = 0
 var respawn_pos = 0.0
 var respawneado_bool = false
 var aplastado = false
+var is_dying_not_aplastado = false
 
 # MOVIMIENTO HORIZONTAL:
 const VEL_X = 30
 var direccion = -1
+
+var input_salto = false
 
 # GRAVEDAD:
 var acel_gravedad = 0.0
@@ -34,6 +37,10 @@ func _physics_process(delta):
 	
 	if not aplastado:
 		velocity.x = direccion * VEL_X * activo
+	
+	if input_salto:
+		velocity.y = -250
+		input_salto = false
 	
 	move_and_slide()
 	update_animation()
@@ -66,6 +73,10 @@ func respawn_goomba_transicion_next_vida():
 func update_animation():
 	if not GlobalValues.estado_juego["en_juego"]:
 		animationPlayer.play("RESET")
+	elif is_dying_not_aplastado:
+		animationPlayer.play("IsDyingNotAplastado")
+		if is_on_floor():
+			input_salto = true
 	elif aplastado:
 		animationPlayer.play("Aplastado")
 	elif activo != 0:
