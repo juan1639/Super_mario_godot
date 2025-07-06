@@ -46,6 +46,7 @@ func _ready():
 	# INSTANCIA DE UNA ESTRELLA (Posteriormente solo hace falta cambiar posicion):
 	GlobalValues.estrellaSprite = estrella_scene.instantiate()
 	GlobalValues.estrellaSprite.global_position = Vector2(-1550, -500)
+	GlobalValues.estrellaSprite.get_child(3).connect("body_entered", Callable(mario, "_on_estrella_body_entered"))
 	add_child(GlobalValues.estrellaSprite)
 	
 	# INSTANCIAR GOOMBAS:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://4hcgtj15ld1m"]
+[gd_scene load_steps=19 format=3 uid="uid://4hcgtj15ld1m"]
 
 [ext_resource type="Script" uid="uid://dq1nn6saist38" path="res://scripts/character_body_2d.gd" id="1_lhlt4"]
 [ext_resource type="Texture2D" uid="uid://bp22hb60foxl4" path="res://textures/mario-ssheet-1.png" id="2_28edd"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://cvyihrqav1bsu" path="res://audio/level-up.mp3" id="5_qimn5"]
 [ext_resource type="AudioStream" uid="uid://bus83krx6q73x" path="res://audio/mario-lose-life.mp3" id="6_gynwn"]
 [ext_resource type="AudioStream" uid="uid://bipa41cl0mwyj" path="res://audio/squit.mp3" id="6_xm55e"]
+[ext_resource type="AudioStream" uid="uid://bldt4v8qolwr4" path="res://audio/estrella.mp3" id="8_qimqe"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k64kw"]
 size = Vector2(12, 16)
@@ -253,10 +254,14 @@ tracks/2/keys = {
 "values": [1, 2, 3]
 }
 
+[sub_resource type="Animation" id="Animation_xm55e"]
+resource_name = "Intermitente"
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3djcq"]
 _data = {
 &"FlagPole": SubResource("Animation_lhlt4"),
 &"Idle": SubResource("Animation_3djcq"),
+&"Intermitente": SubResource("Animation_xm55e"),
 &"Jump": SubResource("Animation_xtmxp"),
 &"LoseLife": SubResource("Animation_gynwn"),
 &"RESET": SubResource("Animation_pk2ks"),
@@ -309,6 +314,8 @@ one_shot = true
 
 [node name="TimerTransicionVidaMenos" type="Timer" parent="CharacterBody2D"]
 one_shot = true
+
+[node name="TimerEstrella" type="Timer" parent="CharacterBody2D"]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="CharacterBody2D"]
 follow_viewport_enabled = true
@@ -396,3 +403,6 @@ stream = ExtResource("6_xm55e")
 
 [node name="MusicaLevelUp" type="AudioStreamPlayer2D" parent="CharacterBody2D"]
 stream = ExtResource("5_qimn5")
+
+[node name="MusicaEstrella" type="AudioStreamPlayer2D" parent="CharacterBody2D"]
+stream = ExtResource("8_qimqe")

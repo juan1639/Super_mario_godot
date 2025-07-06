@@ -20,6 +20,9 @@ var salto = {
 # BONUS BANDERA:
 var altura_alcanzada = Vector2.ZERO
 
+# INVULNERABLE:
+var invulnerability = false
+
 # RESPAWN-POSITION:
 const RESPAWN_POSITION = Vector2(-1578, -32)
 const RESPAWN_MIDDLE_WORLD = Vector2(0, -32)
@@ -33,11 +36,13 @@ const CHECK_POINT_MIDDLE = Vector2(-100, -32)
 @onready var timer = $Timer
 @onready var timerColision = $TimerColision
 @onready var timerTransicionVidaMenos = $TimerTransicionVidaMenos
+@onready var timerEstrella = $TimerEstrella
 @onready var sonido_salto = $SonidoSalto
 @onready var sonido_coin = $SonidoCoin
 @onready var sonido_lose_life = $SonidoLoseLife
 @onready var sonido_aplastar = $SonidoAplastar
 @onready var musica_level_up = $MusicaLevelUp
+@onready var musica_estrella = $MusicaEstrella
 
 # FUNCION INICIALIZADORA:
 func _ready():
@@ -48,6 +53,7 @@ func _ready():
 	timer.start(0.2)
 	timerColision.start(0.1)
 	timerTransicionVidaMenos.start(3.1)
+	timerEstrella.connect("timeout", _on_timer_timeout_estrella)
 
 # FUNCION EJECUTANDOSE A 60 FPS:
 func _physics_process(delta):
@@ -100,6 +106,7 @@ func _physics_process(delta):
 	move_and_slide()
 	update_animation()
 	MarioFuncionesAux.identificar_tile(global_position, salto, timer, sonido_coin)
+	FuncionesAuxiliares.efecto_intermitente_invulnerable(delta, self)
 	check_timeup(delta)
 
 # CHECK TIMEUP:
@@ -199,9 +206,23 @@ func _on_goal_zone_body_entered(body):
 		visible = false
 		reset_estados_cambio_estado_a("transicion_fireworks")
 
+# COLISION VS ESTRELLA (INVULNERAB):
+func _on_estrella_body_entered(body):
+	if body == self:
+		print("Invulnerable!")
+		invulnerability = true
+		timerEstrella.start(GlobalValues.DURACION_ESTRELLA)
+		GlobalValues.musicaFondo.stop()
+		musica_estrella.play()
+		# LA DESPLAZAMOS MUY ABAJO PARA QUE SE DETECTE BOTTOM-LIMIT Y DESACTIVARLA:
+		GlobalValues.estrellaSprite.global_position += Vector2(0, 9990)
+
 # COLISION VS GOOMBA (LOSE LIFE):
 func _on_goomba_body_entered(body, goomba):
 	if timerColision.time_left > 0:
+		return
+	
+	if invulnerability:
 		return
 	
 	if body == self and GlobalValues.estado_juego["en_juego"] and not goomba.get_child(0).aplastado:
@@ -211,6 +232,9 @@ func _on_goomba_body_entered(body, goomba):
 
 # COLISION VS GOOMBA (APLASTAR-GOOMBA):
 func _on_aplastar_goomba_body_entered(body, goomba):
+	if invulnerability:
+		return
+	
 	if body == self and GlobalValues.estado_juego["en_juego"] and not goomba.get_child(0).aplastado:
 		timerColision.start(0.1)
 		goomba.get_child(0).aplastado = true
@@ -224,6 +248,8 @@ func _on_aplastar_goomba_body_entered(body, goomba):
 func actions_lose_life():
 	reset_estados_cambio_estado_a("transicion_vida_menos")
 	GlobalValues.marcadores["lives"] -= 1
+	invulnerability = false
+	
 	var newText = "x " + str(GlobalValues.marcadores["lives"])
 	panelShowVidas.get_child(1).text = newText
 	panelShowVidasMiddle.get_child(1).text = newText
@@ -253,6 +279,13 @@ func select_bonus_bandera():
 		return 800
 	return 400
  
+func _on_timer_timeout_estrella():
+	print("Timeup invulnerabilidad")
+	invulnerability = false
+	modulate = Color(1, 1, 1, 1)
+	musica_estrella.stop()
+	GlobalValues.musicaFondo.play()
+
 # RESETEAR-RESPAWNEAR JUGADOR A SU POSICION INICIAL:
 func reset_position():
 	print(global_position)

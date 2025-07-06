@@ -2,6 +2,7 @@ extends Node
 
 # CONSTANTES GLOBALES:
 const GRAVEDAD = 90.0
+const DURACION_ESTRELLA = 8.1
 
 # LIMITES MUNDO:
 const LIMITE_IZ = -1700
