@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://4hcgtj15ld1m"]
+[gd_scene load_steps=20 format=3 uid="uid://4hcgtj15ld1m"]
 
 [ext_resource type="Script" uid="uid://dq1nn6saist38" path="res://scripts/character_body_2d.gd" id="1_lhlt4"]
 [ext_resource type="Texture2D" uid="uid://bp22hb60foxl4" path="res://textures/mario-ssheet-1.png" id="2_28edd"]
@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://bus83krx6q73x" path="res://audio/mario-lose-life.mp3" id="6_gynwn"]
 [ext_resource type="AudioStream" uid="uid://bipa41cl0mwyj" path="res://audio/squit.mp3" id="6_xm55e"]
 [ext_resource type="AudioStream" uid="uid://bldt4v8qolwr4" path="res://audio/estrella.mp3" id="8_qimqe"]
+[ext_resource type="AudioStream" uid="uid://cwb662nidekmd" path="res://audio/bonus-level-up.mp3" id="9_l5m57"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k64kw"]
 size = Vector2(12, 16)
@@ -282,7 +283,7 @@ anti_aliasing = false
 z_index = 10
 position = Vector2(-1578, -33)
 collision_layer = 4
-collision_mask = 177
+collision_mask = 49
 script = ExtResource("1_lhlt4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
@@ -407,3 +408,6 @@ stream = ExtResource("5_qimn5")
 
 [node name="MusicaEstrella" type="AudioStreamPlayer2D" parent="CharacterBody2D"]
 stream = ExtResource("8_qimqe")
+
+[node name="SonidoBonusLevelUp" type="AudioStreamPlayer2D" parent="CharacterBody2D"]
+stream = ExtResource("9_l5m57")

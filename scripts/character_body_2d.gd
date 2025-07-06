@@ -28,6 +28,11 @@ const RESPAWN_POSITION = Vector2(-1578, -32)
 const RESPAWN_MIDDLE_WORLD = Vector2(0, -32)
 const CHECK_POINT_MIDDLE = Vector2(-100, -32)
 
+# BONUS DE TIEMPO:
+var tiempo_tick_acumulado := 0.0
+const INTERVALO_TICK_TIEMPO := 0.05  # Cada cuánto bajar 1 segundo (en segundos)
+const PUNTOS_POR_SEGUNDO := 50
+
 # REFERENCIAS:
 @onready var sprite = $Sprite2D
 @onready var animationPlayer = $AnimationPlayer
@@ -43,6 +48,7 @@ const CHECK_POINT_MIDDLE = Vector2(-100, -32)
 @onready var sonido_aplastar = $SonidoAplastar
 @onready var musica_level_up = $MusicaLevelUp
 @onready var musica_estrella = $MusicaEstrella
+@onready var sonido_bonus_level_up = $SonidoBonusLevelUp
 
 # FUNCION INICIALIZADORA:
 func _ready():
@@ -79,6 +85,7 @@ func _physics_process(delta):
 		return
 	
 	if GlobalValues.estado_juego["transicion_fireworks"]:
+		procesar_bonus_tiempo(delta)
 		return
 	
 	if GlobalValues.estado_juego["transicion_next_vida"]:
@@ -205,6 +212,7 @@ func _on_goal_zone_body_entered(body):
 		velocity = Vector2.ZERO
 		visible = false
 		reset_estados_cambio_estado_a("transicion_fireworks")
+		sonido_bonus_level_up.play()
 
 # COLISION VS ESTRELLA (INVULNERAB):
 func _on_estrella_body_entered(body):
@@ -267,6 +275,22 @@ func check_start_go_goal_zone():
 	if is_on_floor():
 		velocity = Vector2(abs(VEL_MAX / 9), 0)
 		reset_estados_cambio_estado_a("transicion_goal_zone")
+
+# BONUS TIEMPO-SOBRANTE (FINAL NIVEL):
+func procesar_bonus_tiempo(delta):
+	tiempo_tick_acumulado += delta
+	
+	while tiempo_tick_acumulado >= INTERVALO_TICK_TIEMPO:
+		tiempo_tick_acumulado -= INTERVALO_TICK_TIEMPO
+		
+		if GlobalValues.marcadores["time"] > 0:
+			GlobalValues.marcadores["time"] -= 1
+			MarioFuncionesAux.agregar_puntos_sin_texto(PUNTOS_POR_SEGUNDO)
+		else:
+			GlobalValues.marcadores["time"] = 0
+			sonido_bonus_level_up.stop()
+			reset_estados_cambio_estado_a("fireworks")
+			print("fin bonus")
 
 #func check_start_go_goal_zone():
 	#var tween = create_tween()

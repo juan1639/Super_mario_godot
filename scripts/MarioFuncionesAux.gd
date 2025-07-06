@@ -152,6 +152,11 @@ func agregar_puntos(cantidad, global_position):
 	showBonus.frame_ssheet = showBonus.choose_bonus[str(cantidad)]
 	add_child(showBonus)
 
+# SOLO SUMAR PUNTOS (BONUS-FINAL-NIVEL):
+func agregar_puntos_sin_texto(cantidad):
+	GlobalValues.marcadores["score"] += cantidad
+	emit_signal("marcador_actualizado")
+
 func agregar_monedas(cantidad):
 	GlobalValues.marcadores["coins"] += cantidad
 	emit_signal("monedas_actualizadas")

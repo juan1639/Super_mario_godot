@@ -12,6 +12,7 @@ func aplicar_gravedad(delta, context):
 		if not GlobalValues.estado_juego["transicion_vida_menos"]:
 			context.velocity.y = 0
 
+# EFECTO INTERMITENTE (INVULNERABLE - ESTRELLA):
 func efecto_intermitente_invulnerable(delta, context):
 	if context.invulnerability:
 		tiempo_actual += delta

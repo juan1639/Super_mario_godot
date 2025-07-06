@@ -19,6 +19,7 @@ func _ready():
 	#for obj in self.get_children():
 		#obj.scale = Vector2(1.5, 1.5)
 
+# FUNCION EJECUTANDOSE A 60 FPS (PARA RENDERIZAR EL TIEMPO):
 func _process(delta):
 	tiempo.text = str(int(GlobalValues.marcadores["time"]))
 
