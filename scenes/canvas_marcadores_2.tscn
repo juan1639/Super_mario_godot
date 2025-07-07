@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://djwv36rp57hyg"]
+
+[node name="CanvasMarcadores2" type="CanvasLayer"]
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -400.0
+offset_right = 400.0
+offset_bottom = 506.0
+grow_horizontal = 2
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/GridContainer"]
+layout_mode = 2
+theme_override_constants/separation = 300
+
+[node name="ScoreText" type="Label" parent="PanelContainer/GridContainer/HBoxContainer"]
+layout_mode = 2
+text = "Score"
+
+[node name="MonedasText" type="Label" parent="PanelContainer/GridContainer/HBoxContainer"]
+layout_mode = 2
+text = "Monedas"
+
+[node name="WorldText" type="Label" parent="PanelContainer/GridContainer/HBoxContainer"]
+layout_mode = 2
+text = "World"
+
+[node name="TimeText" type="Label" parent="PanelContainer/GridContainer/HBoxContainer"]
+layout_mode = 2
+text = "Time"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/GridContainer"]
+layout_mode = 2
+theme_override_constants/separation = 300
+
+[node name="ScoreNum" type="Label" parent="PanelContainer/GridContainer/HBoxContainer2"]
+layout_mode = 2
+text = "0"
+
+[node name="MonedasNum" type="Label" parent="PanelContainer/GridContainer/HBoxContainer2"]
+layout_mode = 2
+text = "0"
+
+[node name="WorldNum" type="Label" parent="PanelContainer/GridContainer/HBoxContainer2"]
+layout_mode = 2
+text = "1 - 1"
+
+[node name="TimeNum" type="Label" parent="PanelContainer/GridContainer/HBoxContainer2"]
+layout_mode = 2
+text = "99"

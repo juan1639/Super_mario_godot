@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyvbk4peopvfa"]
+
+[ext_resource type="Theme" uid="uid://c1oskwem7n4tl" path="res://recursos/ui_theme.tres" id="1_4228k"]
+[ext_resource type="Texture2D" uid="uid://80qw1deypsic" path="res://textures/boton-start.png" id="1_x8r7o"]
+
+[node name="CanvasPreJuego" type="CanvasLayer"]
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -182.0
+offset_top = -132.5
+offset_right = 182.0
+offset_bottom = 132.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 8
+theme = ExtResource("1_4228k")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 1
+theme_override_constants/v_separation = 10
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+texture = ExtResource("1_x8r7o")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/GridContainer/TextureRect"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Texto"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+text = "Label 1"
+
+[node name="Label2" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+text = "Label 2"
+
+[node name="Label3" type="Label" parent="PanelContainer/MarginContainer/GridContainer"]
+layout_mode = 2
+text = "Label 3"

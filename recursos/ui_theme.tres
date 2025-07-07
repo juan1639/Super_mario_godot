@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://c1oskwem7n4tl"]
+
+[ext_resource type="FontFile" uid="uid://co0hf3q2wgtcs" path="res://fonts/ARCADEPI.TTF" id="1_dv8v3"]
+
+[resource]
+Label/font_sizes/font_size = 32
+Label/fonts/font = ExtResource("1_dv8v3")
