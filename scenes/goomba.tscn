@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://b2jpccyukjvaa"]
+[gd_scene load_steps=16 format=3 uid="uid://b2jpccyukjvaa"]
 
 [ext_resource type="Texture2D" uid="uid://brof5063rh8o6" path="res://textures/goomba-ssheet-alpha.png" id="1_21hcc"]
 [ext_resource type="Script" uid="uid://q12qkrusnvc8" path="res://scripts/goomba.gd" id="1_s1jgw"]
+[ext_resource type="Texture2D" uid="uid://c6kd2pj4mbh0i" path="res://textures/goomba-paracaidas.png" id="3_fgpj4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y2qtu"]
 size = Vector2(16, 16)
@@ -124,6 +125,18 @@ tracks/2/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:skew")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="Animation" id="Animation_s1jgw"]
 resource_name = "Walk"
@@ -166,10 +179,40 @@ tracks/2/keys = {
 "values": [0, 1]
 }
 
+[sub_resource type="Animation" id="Animation_6xltp"]
+resource_name = "Paracaidas"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_21hcc")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:skew")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.146037, 0.251509, 0.373206),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.0890118, 0.0, 0.0890118]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fgpj4"]
 _data = {
 &"Aplastado": SubResource("Animation_fgpj4"),
 &"IsDyingNotAplastado": SubResource("Animation_l0j8n"),
+&"Paracaidas": SubResource("Animation_6xltp"),
 &"RESET": SubResource("Animation_21hcc"),
 &"Walk": SubResource("Animation_s1jgw")
 }
@@ -179,6 +222,67 @@ size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fgpj4"]
 size = Vector2(6, 7)
+
+[sub_resource type="Animation" id="Animation_5lml2"]
+resource_name = "ParacaidasSkew"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_fgpj4")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:skew")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.000961971, 0.24915, 0.500225, 0.754185),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.122173, 0.0, -0.122173]
+}
+
+[sub_resource type="Animation" id="Animation_3hfl1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_fgpj4")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:skew")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6xltp"]
+_data = {
+&"ParacaidasSkew": SubResource("Animation_5lml2"),
+&"RESET": SubResource("Animation_3hfl1")
+}
 
 [node name="Goomba" type="Node2D"]
 
@@ -217,3 +321,15 @@ shape = SubResource("RectangleShape2D_fgpj4")
 
 [node name="TimerGoombaAplastado" type="Timer" parent="Goomba"]
 one_shot = true
+
+[node name="Sprite2D2" type="Sprite2D" parent="Goomba"]
+visible = false
+z_index = -1
+position = Vector2(0, -16)
+texture = ExtResource("3_fgpj4")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Goomba/Sprite2D2"]
+libraries = {
+&"": SubResource("AnimationLibrary_6xltp")
+}
+autoplay = "ParacaidasSkew"

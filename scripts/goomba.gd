@@ -5,6 +5,9 @@ var tipo_goomba = {
 	"paracaidas": false
 }
 
+# REFERENCIA AL PARACAIDAS:
+@onready var paracaidasSprite = $Sprite2D2
+
 # ACTIVO Y POSICION-INICIAL:
 var activo = 0
 var respawn_pos = 0.0
@@ -35,10 +38,15 @@ func _ready():
 	activo = 0
 	aplastado = false
 	timerGoombaAplastado.connect("timeout", _on_timer_timeout_aplastado)
+	
+	if tipo_goomba["paracaidas"]:
+		paracaidasSprite.visible = true
+		aplicar_gravedad_leve()
 
 # FUNCION EJECUTANDOSE A 60 FPS:
 func _physics_process(delta):
-	FuncionesAuxiliares.aplicar_gravedad(delta, self)
+	if tipo_goomba["normal"]:
+		FuncionesAuxiliares.aplicar_gravedad(delta, self)
 	
 	if tipo_goomba["normal"]:
 		if not aplastado:
@@ -59,6 +67,7 @@ func _physics_process(delta):
 	
 	if is_on_floor() and tipo_goomba["paracaidas"]:
 		reset_tipo_goomba_cambio_a("normal")
+		paracaidasSprite.visible = false
 	
 	if not GlobalValues.estado_juego["en_juego"]:
 		activo = 0
@@ -103,7 +112,7 @@ func update_animation():
 
 # ANIMACIONES GOOMBA[PARACIDAS]:
 func update_animation_paracaidas():
-	animationPlayer.play("RESET")
+	animationPlayer.play("Paracaidas")
 
 # RESET TIPO-GOOMBA Y ESTABLECER EL NUEVO:
 func reset_tipo_goomba_cambio_a(new_tipo):
@@ -111,3 +120,7 @@ func reset_tipo_goomba_cambio_a(new_tipo):
 		tipo_goomba[keyName] = false
 	
 	tipo_goomba[new_tipo] = true
+
+# APLICAR GRAVEDAD LEVE:
+func aplicar_gravedad_leve():
+	velocity.y += GlobalValues.GRAVEDAD / 2
