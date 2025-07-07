@@ -1,11 +1,96 @@
-[gd_scene load_steps=5 format=3 uid="uid://cyvbk4peopvfa"]
+[gd_scene load_steps=21 format=3 uid="uid://cyvbk4peopvfa"]
 
 [ext_resource type="Texture2D" uid="uid://euh0e43mf36x" path="res://textures/smb-fondo.png" id="1_600cu"]
 [ext_resource type="Theme" uid="uid://c1oskwem7n4tl" path="res://recursos/ui_theme.tres" id="1_4228k"]
 [ext_resource type="Texture2D" uid="uid://dtmlyt1bdi48y" path="res://textures/mario-clon-titulo.png" id="2_600cu"]
+[ext_resource type="Script" uid="uid://bv0lohcy580og" path="res://scripts/main_menu.gd" id="4_ahx4m"]
+[ext_resource type="FontFile" uid="uid://co0hf3q2wgtcs" path="res://fonts/ARCADEPI.TTF" id="4_ky5j5"]
+[ext_resource type="AudioStream" uid="uid://ceqhsoc230bh7" path="res://audio/intro-mario-snes.mp3" id="6_8a2xx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4228k"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_msajd"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.137255, 0.658824, 0.890196, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8a2xx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8a2xx"]
+bg_color = Color(0, 0.513726, 0.921569, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_c5etd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ahx4m"]
+bg_color = Color(0.603922, 0.603922, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c5etd"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.0392157, 0.631373, 0.8, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h043q"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jo6gu"]
+bg_color = Color(0.0392157, 0.67451, 0.905882, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v1fon"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h043q"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1xd5r"]
+bg_color = Color(0.603922, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.0431373, 0.635294, 0.8, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v1fon"]
+bg_color = Color(0.0431373, 0.662745, 0.87451, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ffc8c"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [node name="CanvasPreJuego" type="CanvasLayer"]
 
@@ -52,6 +137,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 8
 theme = ExtResource("1_4228k")
+script = ExtResource("4_ahx4m")
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 layout_mode = 2
@@ -64,20 +150,40 @@ theme_override_constants/margin_bottom = 75
 layout_mode = 2
 theme_override_constants/separation = 50
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Button" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_ky5j5")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxFlat_msajd")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_8a2xx")
+theme_override_styles/hover = SubResource("StyleBoxFlat_8a2xx")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_c5etd")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ahx4m")
 text = "Jugar"
-horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="Label2" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Button2" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Opciones"
-horizontal_alignment = 1
-vertical_alignment = 1
+theme_override_fonts/font = ExtResource("4_ky5j5")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxFlat_c5etd")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_h043q")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jo6gu")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_v1fon")
+theme_override_styles/normal = SubResource("StyleBoxFlat_h043q")
+text = " Opciones "
 
-[node name="Label3" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Button3" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_ky5j5")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxFlat_1xd5r")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_h043q")
+theme_override_styles/hover = SubResource("StyleBoxFlat_v1fon")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_v1fon")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ffc8c")
 text = "Salir"
-horizontal_alignment = 1
-vertical_alignment = 1
+
+[node name="MusicaIntroMarioSnes" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_8a2xx")
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Button" to="PanelContainer" method="_on_button_pressed"]

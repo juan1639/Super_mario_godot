@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Mario-clon"
-run/main_scene="uid://cks3mpwilahkr"
+run/main_scene="uid://cyvbk4peopvfa"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -23,6 +23,7 @@ FuncionesAuxiliares="*res://scripts/FuncionesAuxiliares.gd"
 
 [display]
 
+window/size/mode=3
 window/stretch/mode="canvas_items"
 
 [global_group]
