@@ -37,6 +37,7 @@ const PUNTOS_POR_SEGUNDO := 50
 @onready var sprite = $Sprite2D
 @onready var animationPlayer = $AnimationPlayer
 @onready var cpuParticles = $CPUParticles2D
+@onready var cpuParticlesFireworks = get_node("../CPUParticlesFireworks")
 @onready var panelShowVidas = $CanvasLayer/Panel
 @onready var panelShowVidasMiddle = $CanvasLayer/PanelMiddleWorld
 @onready var timer = $Timer
@@ -87,6 +88,11 @@ func _physics_process(delta):
 	
 	if GlobalValues.estado_juego["transicion_fireworks"]:
 		procesar_bonus_tiempo(delta)
+		return
+	
+	if GlobalValues.estado_juego["fireworks"]:
+		FuncionesAuxiliares.aplicar_gravedad(delta, self)
+		move_and_slide()
 		return
 	
 	if GlobalValues.estado_juego["transicion_next_vida"]:
@@ -293,6 +299,7 @@ func procesar_bonus_tiempo(delta):
 			GlobalValues.marcadores["time"] = 0
 			sonido_bonus_level_up.stop()
 			reset_estados_cambio_estado_a("fireworks")
+			timerEstrella.start(0.5)
 			print("fin bonus")
 
 #func check_start_go_goal_zone():
@@ -311,11 +318,17 @@ func select_bonus_bandera():
  
 # CHECK TIMEOUT ESTRELLA:
 func _on_timer_timeout_estrella():
-	print("Timeup invulnerabilidad")
-	invulnerability = false
-	modulate = Color(1, 1, 1, 1)
-	musica_estrella.stop()
-	GlobalValues.musicaFondo.play()
+	if GlobalValues.estado_juego["fireworks"]:
+		cpuParticlesFireworks.emitting = true
+		cpuParticlesFireworks.global_position = Vector2(randf_range(1350, 1650), randf_range(-100, -150))
+		#cpuParticles.scale = Vector2(0.5, 0.5)
+		timerEstrella.start(2.2)
+	else:
+		print("Timeup invulnerabilidad")
+		invulnerability = false
+		modulate = Color(1, 1, 1, 1)
+		musica_estrella.stop()
+		GlobalValues.musicaFondo.play()
 
 # RESETEAR-RESPAWNEAR JUGADOR A SU POSICION INICIAL:
 func reset_position():
