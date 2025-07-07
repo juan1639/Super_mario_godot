@@ -24,7 +24,8 @@ var altura_alcanzada = Vector2.ZERO
 var invulnerability = false
 
 # RESPAWN-POSITION:
-const RESPAWN_POSITION = Vector2(-1578, -32)
+#const RESPAWN_POSITION = Vector2(-1578, -32)
+const RESPAWN_POSITION = Vector2(1400, -32)
 const RESPAWN_MIDDLE_WORLD = Vector2(0, -32)
 const CHECK_POINT_MIDDLE = Vector2(-100, -32)
 
@@ -37,7 +38,7 @@ const PUNTOS_POR_SEGUNDO := 50
 @onready var sprite = $Sprite2D
 @onready var animationPlayer = $AnimationPlayer
 @onready var cpuParticles = $CPUParticles2D
-@onready var cpuParticlesFireworks = get_node("../CPUParticlesFireworks")
+@onready var cpuParticlesFireworks = preload("res://scenes/fireworks.tscn")
 @onready var panelShowVidas = $CanvasLayer/Panel
 @onready var panelShowVidasMiddle = $CanvasLayer/PanelMiddleWorld
 @onready var timer = $Timer
@@ -51,6 +52,9 @@ const PUNTOS_POR_SEGUNDO := 50
 @onready var musica_level_up = $MusicaLevelUp
 @onready var musica_estrella = $MusicaEstrella
 @onready var sonido_bonus_level_up = $SonidoBonusLevelUp
+
+# OTRAS ESCENAS:
+var fireworks: Node2D = null
 
 # FUNCION INICIALIZADORA:
 func _ready():
@@ -91,6 +95,7 @@ func _physics_process(delta):
 		return
 	
 	if GlobalValues.estado_juego["fireworks"]:
+		#print("Fireworks instancia agregada:", is_instance_valid(fireworks))
 		FuncionesAuxiliares.aplicar_gravedad(delta, self)
 		move_and_slide()
 		return
@@ -219,7 +224,7 @@ func _on_goal_zone_body_entered(body):
 	if body == self:
 		print("goal")
 		velocity = Vector2.ZERO
-		visible = false
+		sprite.visible = false
 		reset_estados_cambio_estado_a("transicion_fireworks")
 		sonido_bonus_level_up.play()
 
@@ -319,10 +324,12 @@ func select_bonus_bandera():
 # CHECK TIMEOUT ESTRELLA:
 func _on_timer_timeout_estrella():
 	if GlobalValues.estado_juego["fireworks"]:
-		cpuParticlesFireworks.emitting = true
-		cpuParticlesFireworks.global_position = Vector2(randf_range(1350, 1650), randf_range(-100, -150))
-		#cpuParticles.scale = Vector2(0.5, 0.5)
-		timerEstrella.start(2.2)
+		fireworks = cpuParticlesFireworks.instantiate()
+		add_child(fireworks)
+		fireworks.get_child(0).emitting = true
+		fireworks.get_child(0).global_position = Vector2(randf_range(1350, 1650), randf_range(-100, -150))
+		fireworks.get_child(0).z_index = -1
+		timerEstrella.start(2.1)
 	else:
 		print("Timeup invulnerabilidad")
 		invulnerability = false

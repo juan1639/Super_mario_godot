@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://4hcgtj15ld1m"]
+[gd_scene load_steps=22 format=3 uid="uid://4hcgtj15ld1m"]
 
 [ext_resource type="Script" uid="uid://dq1nn6saist38" path="res://scripts/character_body_2d.gd" id="1_lhlt4"]
 [ext_resource type="Texture2D" uid="uid://bp22hb60foxl4" path="res://textures/mario-ssheet-1.png" id="2_28edd"]
@@ -10,7 +10,6 @@
 [ext_resource type="AudioStream" uid="uid://bipa41cl0mwyj" path="res://audio/squit.mp3" id="6_xm55e"]
 [ext_resource type="AudioStream" uid="uid://bldt4v8qolwr4" path="res://audio/estrella.mp3" id="8_qimqe"]
 [ext_resource type="AudioStream" uid="uid://cwb662nidekmd" path="res://audio/bonus-level-up.mp3" id="9_l5m57"]
-[ext_resource type="Texture2D" uid="uid://6i5u6wxpi7ex" path="res://textures/particula-fireworks.png" id="11_auomn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k64kw"]
 size = Vector2(12, 16)
@@ -283,11 +282,6 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 anti_aliasing = false
 
-[sub_resource type="Curve" id="Curve_auomn"]
-_limits = [-200.0, 200.0, 0.0, 1.0]
-_data = [Vector2(0, 101.124), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 2
-
 [node name="Jugador" type="Node2D"]
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["Jugador", "JugadorGlobal"]]
@@ -444,22 +438,3 @@ stream = ExtResource("8_qimqe")
 
 [node name="SonidoBonusLevelUp" type="AudioStreamPlayer2D" parent="CharacterBody2D"]
 stream = ExtResource("9_l5m57")
-
-[node name="CPUParticlesFireworks" type="CPUParticles2D" parent="."]
-z_index = 1
-scale = Vector2(0.5, 0.5)
-emitting = false
-amount = 50
-texture = ExtResource("11_auomn")
-lifetime = 0.95
-one_shot = true
-explosiveness = 1.0
-randomness = 0.4
-fixed_fps = 30
-spread = 180.0
-gravity = Vector2(0, 40)
-initial_velocity_min = 100.0
-initial_velocity_max = 150.0
-linear_accel_curve = SubResource("Curve_auomn")
-scale_amount_min = 0.03
-scale_amount_max = 0.05
