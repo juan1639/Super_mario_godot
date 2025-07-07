@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cwunkcynl0c81"]
+[gd_scene load_steps=6 format=3 uid="uid://cwunkcynl0c81"]
 
 [ext_resource type="Texture2D" uid="uid://6i5u6wxpi7ex" path="res://textures/particula-fireworks.png" id="1_q76is"]
 [ext_resource type="Texture2D" uid="uid://c7rocsqpd44r8" path="res://textures/castillo-level1-1.png" id="2_cvf0l"]
 [ext_resource type="Texture2D" uid="uid://h547biccwc2m" path="res://textures/bloques-piramide-1-1.png" id="3_fvmay"]
+[ext_resource type="AudioStream" uid="uid://by55sqder2ihj" path="res://audio/firework-oneshot.mp3" id="4_gyf3s"]
 
 [sub_resource type="Curve" id="Curve_cvf0l"]
 _limits = [-200.0, 200.0, 0.0, 1.0]
@@ -46,3 +47,7 @@ offset_right = 273.0
 offset_bottom = 516.0
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("3_fvmay")
+
+[node name="SonidoFireworks" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_gyf3s")
+autoplay = true

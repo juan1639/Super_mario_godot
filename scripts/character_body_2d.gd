@@ -24,8 +24,7 @@ var altura_alcanzada = Vector2.ZERO
 var invulnerability = false
 
 # RESPAWN-POSITION:
-#const RESPAWN_POSITION = Vector2(-1578, -32)
-const RESPAWN_POSITION = Vector2(1400, -32)
+const RESPAWN_POSITION = Vector2(-1578, -32)
 const RESPAWN_MIDDLE_WORLD = Vector2(0, -32)
 const CHECK_POINT_MIDDLE = Vector2(-100, -32)
 
@@ -321,7 +320,7 @@ func select_bonus_bandera():
 		return 800
 	return 400
  
-# CHECK TIMEOUT ESTRELLA:
+# CHECK TIMEOUT ESTRELLA (y FIREWORKS):
 func _on_timer_timeout_estrella():
 	if GlobalValues.estado_juego["fireworks"]:
 		fireworks = cpuParticlesFireworks.instantiate()
