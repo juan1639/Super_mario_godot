@@ -23,7 +23,6 @@ FuncionesAuxiliares="*res://scripts/FuncionesAuxiliares.gd"
 
 [display]
 
-window/size/mode=3
 window/stretch/mode="canvas_items"
 
 [global_group]
