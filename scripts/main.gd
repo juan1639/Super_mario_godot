@@ -17,7 +17,7 @@ extends Node2D
 @onready var flagPole = $Map_1_1/FlagPole
 
 # REFERENCIA A LAS ZONAS INSTANCIA-GOOMBAS-PARACAIDAS:
-@onready var zoneInstanciaParacaidas = $Map_1_1/ZoneInstanciaParacaidas
+@onready var zoneInstanciaParacaidas = $Map_1_1/ParacaidasZones
 
 # REFERENCIA A MARIO/JUGADOR:
 @onready var mario = $Jugador/CharacterBody2D
@@ -73,7 +73,8 @@ func _ready():
 	goalZone.connect("body_entered", Callable(mario, "_on_goal_zone_body_entered"))
 	
 	# CONECTAR SEÑALES de zoneInstanciaParacaidas:
-	zoneInstanciaParacaidas.connect("body_entered", Callable(mario, "_on_instancia_paracaidas_body_entered"))
+	for zone in zoneInstanciaParacaidas.get_children():
+		zone.connect("body_entered", Callable(mario, "_on_instancia_paracaidas_body_entered").bind(zone))
 	
 	# START PLAY MUSIC:
 	GlobalValues.musicaFondo = $MusicaFondo
@@ -82,7 +83,7 @@ func _ready():
 # CALL-DEFERRED INSTANCIAR-GOOMBA-PARACAIDAS:
 func instanciar_goomba_paracaidas():
 	var goomba = goomba_scene.instantiate()
-	goomba.global_position = Vector2(-1280, -200)
+	goomba.global_position = Vector2(mario.global_position.x + 120, -200)
 	goomba.get_child(0).reset_tipo_goomba_cambio_a("paracaidas")
 	goomba.get_child(0).get_child(3).connect("body_entered", Callable(mario, "_on_goomba_body_entered").bind(goomba))
 	goomba.get_child(0).get_child(4).connect("body_entered", Callable(mario, "_on_aplastar_goomba_body_entered").bind(goomba))

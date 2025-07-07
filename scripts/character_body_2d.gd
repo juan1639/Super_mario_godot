@@ -55,6 +55,7 @@ const PUNTOS_POR_SEGUNDO := 50
 
 # OTRAS ESCENAS:
 var fireworks: Node2D = null
+var array_desactivar_goombas_paracaidas = []
 
 # FUNCION INICIALIZADORA:
 func _ready():
@@ -229,10 +230,14 @@ func _on_goal_zone_body_entered(body):
 		reset_estados_cambio_estado_a("transicion_fireworks")
 		sonido_bonus_level_up.play()
 
-# ZONE INSTANCIA GOOMBA-PARACAIDAS:
-func _on_instancia_paracaidas_body_entered(body):
+# ZONA INSTANCIA GOOMBA-PARACAIDAS:
+func _on_instancia_paracaidas_body_entered(body, zone):
 	if body == self and GlobalValues.estado_juego["en_juego"]:
-		print("instancia paracaidas")
+		print("instancia paracaidas", zone.name)
+		if zone.name in array_desactivar_goombas_paracaidas:
+			return
+		
+		array_desactivar_goombas_paracaidas.append(zone.name)
 		GlobalValues.main_node.call_deferred("instanciar_goomba_paracaidas")
 
 # COLISION VS ESTRELLA (INVULNERAB):

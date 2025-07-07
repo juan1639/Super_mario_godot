@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://bxaqji5l0cw2b"]
+[gd_scene load_steps=23 format=4 uid="uid://bxaqji5l0cw2b"]
 
 [ext_resource type="Texture2D" uid="uid://cseipw28w4h5c" path="res://textures/SuperMarioBros-World1-1-no-colision.png" id="1_a6cnk"]
 [ext_resource type="Texture2D" uid="uid://b8e54vlqe2mxj" path="res://textures/signLarge.png" id="2_shhok"]
@@ -90,6 +90,21 @@ size = Vector2(9, 191)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_76qml"]
 size = Vector2(80, 55)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sww45"]
+size = Vector2(20, 177)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m0s6j"]
+size = Vector2(36, 70)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cboe7"]
+size = Vector2(20, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yrs51"]
+size = Vector2(20, 144)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wgm8n"]
+size = Vector2(30, 167)
 
 [sub_resource type="Animation" id="Animation_rsg11"]
 length = 0.001
@@ -266,14 +281,61 @@ collision_mask = 4
 position = Vector2(3.5, -85.5)
 shape = SubResource("RectangleShape2D_lvdtj")
 
-[node name="ZoneInstanciaParacaidas" type="Area2D" parent="."]
+[node name="ParacaidasZones" type="Node" parent="."]
+
+[node name="ZoneInstanciaParacaidas0" type="Area2D" parent="ParacaidasZones"]
 position = Vector2(-1336, -141)
 collision_layer = 2048
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ZoneInstanciaParacaidas"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ParacaidasZones/ZoneInstanciaParacaidas0"]
 position = Vector2(2, -17.5)
 shape = SubResource("RectangleShape2D_76qml")
+
+[node name="ZoneInstanciaParacaidas1" type="Area2D" parent="ParacaidasZones"]
+position = Vector2(-734, -93)
+collision_layer = 2048
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ParacaidasZones/ZoneInstanciaParacaidas1"]
+position = Vector2(0, -3.5)
+shape = SubResource("RectangleShape2D_sww45")
+
+[node name="ZoneInstanciaParacaidas2" type="Area2D" parent="ParacaidasZones"]
+position = Vector2(-207, -158)
+collision_layer = 2048
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ParacaidasZones/ZoneInstanciaParacaidas2"]
+position = Vector2(-8, -10)
+shape = SubResource("RectangleShape2D_m0s6j")
+
+[node name="ZoneInstanciaParacaidas3" type="Area2D" parent="ParacaidasZones"]
+position = Vector2(-224, -55)
+collision_layer = 2048
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ParacaidasZones/ZoneInstanciaParacaidas3"]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_cboe7")
+
+[node name="ZoneInstanciaParacaidas4" type="Area2D" parent="ParacaidasZones"]
+position = Vector2(528, -91)
+collision_layer = 2048
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ParacaidasZones/ZoneInstanciaParacaidas4"]
+position = Vector2(0, 7)
+shape = SubResource("RectangleShape2D_yrs51")
+
+[node name="ZoneInstanciaParacaidas5" type="Area2D" parent="ParacaidasZones"]
+position = Vector2(881, -72)
+collision_layer = 2048
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ParacaidasZones/ZoneInstanciaParacaidas5"]
+position = Vector2(5, -16.5)
+shape = SubResource("RectangleShape2D_wgm8n")
 
 [node name="FlagSprite" type="Sprite2D" parent="."]
 z_index = 6

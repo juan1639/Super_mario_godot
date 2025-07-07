@@ -85,6 +85,7 @@ func respawn_goomba_transicion_next_vida():
 	if GlobalValues.estado_juego["transicion_next_vida"] and not respawneado_bool:
 		respawneado_bool = true
 		global_position = respawn_pos
+		direccion = -1
 	
 	if GlobalValues.estado_juego["en_juego"] and respawneado_bool:
 		respawneado_bool = false
