@@ -23,7 +23,6 @@ FuncionesAuxiliares="*res://scripts/FuncionesAuxiliares.gd"
 
 [display]
 
-window/size/mode=3
 window/stretch/mode="canvas_items"
 
 [global_group]
@@ -41,6 +40,7 @@ JugadorGlobal=""
 2d_physics/layer_7="GoalZone"
 2d_physics/layer_8="Seta"
 2d_physics/layer_10="Estrella"
+2d_physics/layer_12="ZoneInstanciaParacaidas"
 
 [rendering]
 

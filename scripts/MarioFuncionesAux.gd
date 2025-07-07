@@ -20,7 +20,7 @@ func identificar_tile(global_position, salto, timer, sonido_coin):
 		return
 	
 	var atlas_coords = tilemap.get_cell_atlas_coords(tile_pos)
-	print("Coords del tile golpeado:", atlas_coords)
+	#print("Coords del tile golpeado:", atlas_coords)
 	
 	# TILE-INTERROGACION = (2,1) | TILE-BLOQUE-LADRILLO = (3,1):
 	const INTERROGACION = Vector2i(2, 1)

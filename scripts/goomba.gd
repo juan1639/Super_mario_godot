@@ -1,5 +1,10 @@
 extends CharacterBody2D
 
+var tipo_goomba = {
+	"normal": true,
+	"paracaidas": false
+}
+
 # ACTIVO Y POSICION-INICIAL:
 var activo = 0
 var respawn_pos = 0.0
@@ -35,10 +40,13 @@ func _ready():
 func _physics_process(delta):
 	FuncionesAuxiliares.aplicar_gravedad(delta, self)
 	
-	if not aplastado:
-		velocity.x = direccion * VEL_X * activo
+	if tipo_goomba["normal"]:
+		if not aplastado:
+			velocity.x = direccion * VEL_X * activo
+	elif tipo_goomba["paracaidas"]:
+			velocity.x = 0
 	
-	if input_salto:
+	if input_salto and tipo_goomba["normal"]:
 		velocity.y = -250
 		input_salto = false
 	
@@ -49,10 +57,13 @@ func _physics_process(delta):
 	if is_on_wall():
 		direccion *= -1
 	
+	if is_on_floor() and tipo_goomba["paracaidas"]:
+		reset_tipo_goomba_cambio_a("normal")
+	
 	if not GlobalValues.estado_juego["en_juego"]:
 		activo = 0
 	
-	if activo != 1 and not aplastado:
+	if activo != 1 and not aplastado and tipo_goomba["normal"]:
 		if abs(global_position.x - GlobalValues.marioRG.global_position.x) < DISTANCIA_ACTIVACION and GlobalValues.estado_juego["en_juego"]:
 			activo = 1
 
@@ -71,6 +82,12 @@ func respawn_goomba_transicion_next_vida():
 
 # UPDATE ANIMATION:
 func update_animation():
+	# ANIMACIONES GOOMBA[PARACIDAS]:
+	if tipo_goomba["paracaidas"]:
+		update_animation_paracaidas()
+		return
+	
+	# ANIMACIONES GOOMBA[NORMAL]:
 	if not GlobalValues.estado_juego["en_juego"]:
 		animationPlayer.play("RESET")
 	elif is_dying_not_aplastado:
@@ -83,3 +100,14 @@ func update_animation():
 		animationPlayer.play("Walk")
 	else:
 		animationPlayer.play("RESET")
+
+# ANIMACIONES GOOMBA[PARACIDAS]:
+func update_animation_paracaidas():
+	animationPlayer.play("RESET")
+
+# RESET TIPO-GOOMBA Y ESTABLECER EL NUEVO:
+func reset_tipo_goomba_cambio_a(new_tipo):
+	for keyName in tipo_goomba.keys():
+		tipo_goomba[keyName] = false
+	
+	tipo_goomba[new_tipo] = true

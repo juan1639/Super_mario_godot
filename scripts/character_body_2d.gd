@@ -38,6 +38,7 @@ const PUNTOS_POR_SEGUNDO := 50
 @onready var animationPlayer = $AnimationPlayer
 @onready var cpuParticles = $CPUParticles2D
 @onready var cpuParticlesFireworks = preload("res://scenes/fireworks.tscn")
+@onready var goomba_scene = preload("res://scenes/goomba.tscn")
 @onready var panelShowVidas = $CanvasLayer/Panel
 @onready var panelShowVidasMiddle = $CanvasLayer/PanelMiddleWorld
 @onready var timer = $Timer
@@ -199,6 +200,7 @@ func update_animation():
 		animationPlayer.play("Idle")
 
 # SEÑALES:
+# MARIO FALL-ZONES:
 func _on_fall_zone_body_entered(body):
 	if body == self and GlobalValues.estado_juego["en_juego"]:
 		actions_lose_life()
@@ -226,6 +228,12 @@ func _on_goal_zone_body_entered(body):
 		sprite.visible = false
 		reset_estados_cambio_estado_a("transicion_fireworks")
 		sonido_bonus_level_up.play()
+
+# ZONE INSTANCIA GOOMBA-PARACAIDAS:
+func _on_instancia_paracaidas_body_entered(body):
+	if body == self and GlobalValues.estado_juego["en_juego"]:
+		print("instancia paracaidas")
+		GlobalValues.main_node.call_deferred("instanciar_goomba_paracaidas")
 
 # COLISION VS ESTRELLA (INVULNERAB):
 func _on_estrella_body_entered(body):

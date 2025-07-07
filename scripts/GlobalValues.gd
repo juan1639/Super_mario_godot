@@ -9,7 +9,8 @@ const LIMITE_IZ = -1700
 const LIMITE_DE = 1700
 const BOTTOM_LIMIT = 900 # BOTTOM-LIMIT (si es necesario)
 
-# VARIABLES GLOBALES:
+# REFERENCIAS GLOBALES:
+var main_node: Node2D = null
 var ref_tilemap: TileMapLayer = null
 var flag_sprite: Sprite2D = null
 var bloqueSprite: Node2D = null
