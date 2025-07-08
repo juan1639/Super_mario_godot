@@ -187,3 +187,4 @@ text = "Salir"
 stream = ExtResource("6_8a2xx")
 
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Button" to="PanelContainer" method="_on_button_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/Button3" to="PanelContainer" method="_on_button_3_pressed"]

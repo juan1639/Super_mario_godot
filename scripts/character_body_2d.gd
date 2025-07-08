@@ -39,7 +39,7 @@ const PUNTOS_POR_SEGUNDO := 50
 @onready var cpuParticles = $CPUParticles2D
 @onready var cpuParticlesFireworks = preload("res://scenes/fireworks.tscn")
 @onready var goomba_scene = preload("res://scenes/goomba.tscn")
-@onready var panelShowVidas = $CanvasLayer/Panel
+@onready var panelShowVidas = $CanvasLayer/PanelContainer
 @onready var panelShowVidasMiddle = $CanvasLayer/PanelMiddleWorld
 @onready var timer = $Timer
 @onready var timerColision = $TimerColision
@@ -288,8 +288,8 @@ func actions_lose_life():
 	invulnerability = false
 	
 	var newText = "x " + str(GlobalValues.marcadores["lives"])
-	panelShowVidas.get_child(1).text = newText
-	panelShowVidasMiddle.get_child(1).text = newText
+	panelShowVidas.get_child(0).get_child(0).get_child(1).text = newText
+	panelShowVidasMiddle.get_child(0).get_child(0).get_child(1).text = newText
 	
 	timerTransicionVidaMenos.start(3.1)
 	
