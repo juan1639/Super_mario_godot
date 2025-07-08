@@ -2,6 +2,7 @@ extends Node
 
 # SEÑALES:
 signal gameover_instance
+signal next_level_instance
 
 # VARIABLES:
 var tiempo_actual = 0.0
@@ -30,3 +31,7 @@ func efecto_intermitente_invulnerable(delta, context):
 # EMITIR SEÑAL GAMEOVER:
 func emitir_signal_gameover():
 	emit_signal("gameover_instance")
+
+# EMITIR SEÑAL NEXT-LEVEL:
+func emitir_signal_next_level():
+	emit_signal("next_level_instance")

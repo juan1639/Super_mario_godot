@@ -84,6 +84,7 @@ func _physics_process(delta):
 		aplicar_clamps()
 		
 		if GlobalValues.marcadores["lives"] <= 0:
+			print("señal gameover")
 			reset_estados_cambio_estado_a("game_over")
 			FuncionesAuxiliares.emitir_signal_gameover()
 		
@@ -228,9 +229,10 @@ func _on_flag_pole_body_entered(body):
 # DESAPARECER POR LA PUERTA DEL CASITLLO:
 func _on_goal_zone_body_entered(body):
 	if body == self:
-		print("goal")
+		print("goal - emitir señal next-level")
 		velocity = Vector2.ZERO
 		sprite.visible = false
+		FuncionesAuxiliares.emitir_signal_next_level()
 		reset_estados_cambio_estado_a("transicion_fireworks")
 		sonido_bonus_level_up.play()
 

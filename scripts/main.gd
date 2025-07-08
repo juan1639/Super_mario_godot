@@ -9,6 +9,7 @@ extends Node2D
 @onready var seta_scene = preload("res://scenes/seta.tscn")
 @onready var estrella_scene = preload("res://scenes/estrella.tscn")
 @onready var gameover_scene = preload("res://scenes/gameover.tscn")
+@onready var button_next_level_scene = preload("res://scenes/continuar_next_level.tscn")
 
 # REFERENCIA A AREA2D (FallZone):
 @onready var fallZones = $Map_1_1/FallZones
@@ -25,8 +26,10 @@ extends Node2D
 
 # FUNCION INICIALIZADORA:
 func _ready():
-	# CONEXION A SEÑAL GAMEOVER:
+	# CONEXION A SEÑALES GAMEOVER y BUTTON-NEXT-LEVEL:
 	FuncionesAuxiliares.connect("gameover_instance", Callable(self, "_on_gameover_instance"))
+	FuncionesAuxiliares.connect("next_level_instance", Callable(self, "_on_next_level_instance"))
+	
 	# REFERENCIA ESTE NODO PRINCIPAL (MAIN):
 	GlobalValues.main_node = self
 
@@ -96,3 +99,8 @@ func instanciar_goomba_paracaidas():
 func _on_gameover_instance():
 	var gameover = gameover_scene.instantiate()
 	add_child(gameover)
+
+# INSTANCIAR BUTTON-NEXT-LEVVEL:
+func _on_next_level_instance():
+	var buttonNextLevel = button_next_level_scene.instantiate()
+	add_child(buttonNextLevel)
