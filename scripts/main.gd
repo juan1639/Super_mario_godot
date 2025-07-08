@@ -8,6 +8,7 @@ extends Node2D
 @onready var moneda_scene = preload("res://scenes/moneda.tscn")
 @onready var seta_scene = preload("res://scenes/seta.tscn")
 @onready var estrella_scene = preload("res://scenes/estrella.tscn")
+@onready var gameover_scene = preload("res://scenes/gameover.tscn")
 
 # REFERENCIA A AREA2D (FallZone):
 @onready var fallZones = $Map_1_1/FallZones
@@ -24,6 +25,8 @@ extends Node2D
 
 # FUNCION INICIALIZADORA:
 func _ready():
+	# CONEXION A SEÑAL GAMEOVER:
+	FuncionesAuxiliares.connect("gameover_instance", Callable(self, "_on_gameover_instance"))
 	# REFERENCIA ESTE NODO PRINCIPAL (MAIN):
 	GlobalValues.main_node = self
 
@@ -88,3 +91,8 @@ func instanciar_goomba_paracaidas():
 	goomba.get_child(0).get_child(3).connect("body_entered", Callable(mario, "_on_goomba_body_entered").bind(goomba))
 	goomba.get_child(0).get_child(4).connect("body_entered", Callable(mario, "_on_aplastar_goomba_body_entered").bind(goomba))
 	add_child(goomba)
+
+# INSTANCIAR GAME OVER:
+func _on_gameover_instance():
+	var gameover = gameover_scene.instantiate()
+	add_child(gameover)

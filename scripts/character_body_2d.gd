@@ -83,12 +83,16 @@ func _physics_process(delta):
 		update_animation()
 		aplicar_clamps()
 		
+		if GlobalValues.marcadores["lives"] <= 0:
+			reset_estados_cambio_estado_a("game_over")
+			FuncionesAuxiliares.emitir_signal_gameover()
+		
 		if timerTransicionVidaMenos.time_left == 0.0 and GlobalValues.estado_juego["transicion_vida_menos"]:
 			timerTransicionVidaMenos.start(2.1)
 			reset_estados_cambio_estado_a("transicion_next_vida")
 			reset_position()
-			panelShowVidas.visible = true
-			panelShowVidasMiddle.visible = true
+			panelShowVidas.visible = true if not GlobalValues.estado_juego["game_over"] else false
+			panelShowVidasMiddle.visible = true if not GlobalValues.estado_juego["game_over"] else false
 		return
 	
 	if GlobalValues.estado_juego["transicion_fireworks"]:
@@ -105,9 +109,6 @@ func _physics_process(delta):
 		FuncionesAuxiliares.aplicar_gravedad(delta, self)
 		move_and_slide()
 		update_animation()
-		
-		if GlobalValues.marcadores["lives"] <= 0:
-			get_tree().quit()
 		
 		if timerTransicionVidaMenos.time_left == 0.0:
 			reset_estados_cambio_estado_a("en_juego")

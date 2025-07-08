@@ -1,5 +1,9 @@
 extends Node
 
+# SEÑALES:
+signal gameover_instance
+
+# VARIABLES:
 var tiempo_actual = 0.0
 
 # APLICAR GRAVEDAD:
@@ -22,3 +26,7 @@ func efecto_intermitente_invulnerable(delta, context):
 		context.modulate = Color(1, intensidad, intensidad)
 	else:
 		tiempo_actual = 0.0
+
+# EMITIR SEÑAL GAMEOVER:
+func emitir_signal_gameover():
+	emit_signal("gameover_instance")
