@@ -106,6 +106,9 @@ func _physics_process(delta):
 		move_and_slide()
 		update_animation()
 		
+		if GlobalValues.marcadores["lives"] <= 0:
+			get_tree().quit()
+		
 		if timerTransicionVidaMenos.time_left == 0.0:
 			reset_estados_cambio_estado_a("en_juego")
 			panelShowVidas.visible = false
