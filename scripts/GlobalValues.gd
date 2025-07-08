@@ -25,7 +25,7 @@ var marioRG: CharacterBody2D = null
 var musicaFondo: AudioStreamPlayer2D = null
 
 # MARCADORES:
-const TIEMPO_INICIAL = 90
+const TIEMPO_INICIAL = 59
 
 var marcadores = {
 	"score": 0,

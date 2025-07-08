@@ -41,6 +41,7 @@ const PUNTOS_POR_SEGUNDO := 50
 @onready var goomba_scene = preload("res://scenes/goomba.tscn")
 @onready var panelShowVidas = $CanvasLayer/PanelContainer
 @onready var panelShowVidasMiddle = $CanvasLayer/PanelMiddleWorld
+@onready var panelTimeup = $CanvasLayer/PanelTimeup
 @onready var timer = $Timer
 @onready var timerColision = $TimerColision
 @onready var timerTransicionVidaMenos = $TimerTransicionVidaMenos
@@ -90,6 +91,7 @@ func _physics_process(delta):
 		
 		if timerTransicionVidaMenos.time_left == 0.0 and GlobalValues.estado_juego["transicion_vida_menos"]:
 			timerTransicionVidaMenos.start(2.1)
+			panelTimeup.visible = false
 			reset_estados_cambio_estado_a("transicion_next_vida")
 			reset_position()
 			panelShowVidas.visible = true if not GlobalValues.estado_juego["game_over"] else false
@@ -140,6 +142,10 @@ func check_timeup(delta):
 	if GlobalValues.marcadores["time"] <= 0:
 		GlobalValues.marcadores["time"] = 0.0
 		print("Time up")
+		velocity = Vector2(0, POTENCIA_SALTO * 2)
+		panelTimeup.visible = true
+		panelTimeup.global_position = global_position + Vector2(-75, -100)
+		actions_lose_life()
 
 # APLICAR GRAVEDAD LEVE:
 func aplicar_gravedad_leve(delta):
@@ -270,7 +276,6 @@ func _on_goomba_body_entered(body, goomba):
 			return
 		elif not invulnerability:
 			velocity = Vector2(0, POTENCIA_SALTO * 2)
-			goomba.get_child(0).activo = 0
 			actions_lose_life()
 
 # COLISION VS GOOMBA (APLASTAR-GOOMBA):
@@ -292,6 +297,7 @@ func actions_lose_life():
 	reset_estados_cambio_estado_a("transicion_vida_menos")
 	GlobalValues.marcadores["lives"] -= 1
 	invulnerability = false
+	GlobalValues.marcadores["time"] = GlobalValues.TIEMPO_INICIAL
 	
 	var newText = "x " + str(GlobalValues.marcadores["lives"])
 	panelShowVidas.get_child(0).get_child(0).get_child(1).text = newText
